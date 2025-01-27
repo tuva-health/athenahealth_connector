@@ -1,0 +1,38 @@
+name: 'athena_connector'
+version: '1.0.0'
+config-version: 2
+
+profile: default
+
+vars:
+  ## validate that all seeds were populated correctly
+  error_empty_seeds: true
+
+  ## populates the tuva last run columns
+  tuva_last_run: '{{ run_started_at.astimezone(modules.pytz.timezone("UTC")) }}'
+
+
+  ## sets tuva to the correct model build types
+  clinical_enabled: true
+
+
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+
+dispatch:
+  - macro_namespace: 'dbt'
+    search_order: ['the_tuva_project', 'dbt']
+
+
+
