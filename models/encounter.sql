@@ -1,7 +1,7 @@
 with primary_dx as (
     select ced0.contextid, ced0.clinicalencounterid, ced0.snomedcode, sno0.description as snomed_description
            ,row_number() over (partition by clinicalencounterid order by ordering) as rw
-    from {{source('athena','CLINICALENCOUNTERDIAGNOSIS')}} ced0
+    from {{source('athena','dataview_imports__clinicalencounterdiagnosis__v1')}} ced0
     left join {{ ref('terminology__snomed_ct') }} sno0
         on cast(ced0.snomedcode as {{ dbt.type_string() }} ) = cast(sno0.snomed_ct as {{ dbt.type_string() }} )
     where deletedby is null and deleteddatetime is null
@@ -22,8 +22,8 @@ select
     , cast(null as {{ dbt.type_string() }} ) as discharge_disposition_code
     , cast(null as {{ dbt.type_string() }} ) as discharge_disposition_description
     , cast(null as {{ dbt.type_string() }} ) as attending_provider_id
-    , cast(ce.contextid || '.prov.' || ce.supervisingproviderid as {{ dbt.type_string() }} ) as attending_provider_name
-    , cast(ce.contextid || '.' || d.departmentid as {{ dbt.type_string() }} ) as facility_id
+    , cast(ce.contextid as {{ dbt.type_string() }} ) || '.prov.' || cast(ce.supervisingproviderid as {{ dbt.type_string() }} ) as attending_provider_name
+    , cast(ce.contextid as {{ dbt.type_string() }} ) || '.' || cast(d.departmentid as {{ dbt.type_string() }} ) as facility_id
     , cast(d.departmentname as {{ dbt.type_string() }} ) as facility_name
     , cast(case when primary_dx.SNOMEDCODE is not null then 'snomed' end as {{ dbt.type_string() }} ) as primary_diagnosis_code_type
     , cast(primary_dx.SNOMEDCODE as {{ dbt.type_string() }} ) as primary_diagnosis_code
@@ -39,12 +39,11 @@ select
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 -- select *
-from {{source('athena','CLINICALENCOUNTER')}} as ce
-inner join {{ source('athena','PATIENT') }} as p
+from {{source('athena','dataview_imports__clinicalencounter__v1')}} as ce
+inner join {{ source('athena','dataview_imports__patient__v1') }} as p
     on ce.patientid = p.patientid and ce.contextid = p.contextid
 left join primary_dx
 on ce.contextid = primary_dx.contextid and  ce.clinicalencounterid = primary_dx.CLINICALENCOUNTERID and primary_dx.rw = 1
-left join {{ source('athena','DEPARTMENT') }} as d
+left join {{ source('athena','dataview_imports__department__v1') }} as d
     on ce.departmentid = d.departmentid and ce.contextid = d.contextid
 where ce.deleteddatetime is null and ce.deletedby is null
-

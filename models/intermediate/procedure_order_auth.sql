@@ -2,8 +2,8 @@
 
 select
       cast(oac.contextid as {{ dbt.type_string() }} ) || '.orderauth.' || cast(oac.orderauthcptid as {{ dbt.type_string() }} ) as procedure_id
-    , cast(oac.contextid || '.' || p.enterpriseid as {{ dbt.type_string() }} ) as person_id
-    , cast(oac.contextid || '.' || p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
+    , cast(oac.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as person_id
+    , cast(oac.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
     , cast(d.contextid as {{ dbt.type_string() }} ) || '.' || cast(d.clinicalencounterid as {{ dbt.type_string() }} ) as encounter_id
     , cast(null as {{ dbt.type_string() }} ) as claim_id
     , cast(oa.proceduredatedatetime as date) as procedure_date
@@ -23,12 +23,12 @@ select
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 --select *
-From {{  source('athena','ORDERAUTHCPT') }} as oac
-inner join {{ source('athena','ORDERAUTH') }} as oa
+From {{  source('athena','dataview_imports__orderauthcpt__v1') }} as oac
+inner join {{ source('athena','dataview_imports__orderauth__v1') }} as oa
     on oac.ORDERAUTHID = oa.ORDERAUTHID and oac.contextid = oa.contextid
-inner join {{ source('athena','DOCUMENT') }} as d
+inner join {{ source('athena','dataview_imports__document__v1') }} as d
     on oa.documentid = d.documentid and oa.contextid = d.contextid
-inner join {{ source('athena','PATIENT') }} as p
+inner join {{  source('athena','dataview_imports__patient__v1') }} as p
     on d.patientid = p.patientid and d.contextid = p.contextid
 left join {{ ref('enhanced_procedure_code') }} as epc
     on  oac.procedurecode = epc.procedurecode and oac.contextid = epc.contextid

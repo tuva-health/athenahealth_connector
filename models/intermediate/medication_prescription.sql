@@ -21,15 +21,15 @@ select
     , cast(cp.dosagequantity as {{ dbt.type_int() }} ) as quantity
     , cast(cp.displaydosageunits as {{ dbt.type_string() }} ) as quantity_unit
     , cast(cp.dayssupply as {{ dbt.type_int() }} ) as days_supply
-    , cast(d.contextid || '.clinprov.' || d.clinicalproviderid as {{ dbt.type_string() }} ) as practitioner_id
+    , cast(d.contextid as {{ dbt.type_string() }} ) || '.clinprov.' || cast(d.clinicalproviderid as {{ dbt.type_string() }} ) as practitioner_id
     , cast('athena.' || cp.contextname as {{ dbt.type_string() }} ) as data_source
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 -- select *
-from {{ source('athena','CLINICALPRESCRIPTION') }} cp
-inner join {{source('athena','DOCUMENT')}} as d
+from {{ source('athena','dataview_imports__clinicalprescription__v1') }} cp
+inner join {{source('athena','dataview_imports__document__v1')}} as d
     on cp.documentid = d.documentid and cp.contextid = d.contextid
-inner join  {{source('athena','CHART')}} as c
+inner join  {{source('athena','dataview_imports__chart__v1')}} as c
     on d.chartid = c.chartid and d.contextid = c.contextid
 where cp.deleteddatetime is null and cp.deletedby is null
 and d.status <> 'DELETED' and d.deleteddatetime is null and d.deletedby is null

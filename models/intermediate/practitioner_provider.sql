@@ -1,5 +1,5 @@
 select
-      cast(p.contextid ||'.prov.'||p.providerid as {{ dbt.type_string() }} ) as practitioner_id
+      cast(p.contextid as {{ dbt.type_string() }} ) || '.prov.' || cast(p.providerid as {{ dbt.type_string() }} ) as practitioner_id
     , cast(p.providernpinumber as {{ dbt.type_string() }} ) as npi
     , cast(p.providerfirstname as {{ dbt.type_string() }} ) as first_name
     , cast(p.providerlastname as {{ dbt.type_string() }} ) as last_name
@@ -11,4 +11,4 @@ select
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
     , p.providertype as credentials
     , '{{ dbt_utils.pretty_time(format="%Y-%m-%d %H:%M:%S") }}' as tuva_last_run
-from {{ source('athena','PROVIDER') }} p
+from {{ source('athena','dataview_imports__provider__v1') }} p

@@ -23,11 +23,11 @@ select
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 --select top 100 *
-from {{source('athena','CLAIMDIAGNOSIS') }} as cd
-inner join {{ source('athena','CLAIM' ) }} as c
+from {{source('athena','dataview_imports__claimdiagnosis__v1') }} as cd
+inner join {{ source('athena','dataview_imports__claim__v1' ) }} as c
     on cd.claimid = c.claimid and cd.contextid = c.contextid
-inner join {{ source('athena','PATIENT') }} as p
+inner join {{ source('athena','dataview_imports__patient__v1') }} as p
     on c.patientid =p.patientid and cd.contextid = p.contextid
-left join {{ source('athena','ICDCODEALL') }} as i
+left join {{ source('athena','dataview_imports__icdcodeall__v1') }} as i
     on cd.icdcodeid = i.icdcodeid and cd.contextid = i.contextid
 where cd.deletedby is null and cd.deleteddatetime is null

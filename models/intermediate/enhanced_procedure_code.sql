@@ -7,8 +7,8 @@ select
     {% if target.type == 'snowflake' %}
         when len(procedurecode) = 5 or substr(procedurecode,6,1) = ',' then 'hcpcs'
         else contextname || '.procedure_code'
-    {% elif target.type == 'bigquery' %}
-        when length(cast(procedurecode as {{ dbt.type_string() }} ) ) = 5 or substr(procedurecode,6,1) = ',' then 'hcpcs'
+    {% elif target.type in ('athena', 'bigquery') %}
+        when length(cast(procedurecode as {{ dbt.type_string() }})) = 5 or substr(procedurecode,6,1) = ',' then 'hcpcs'
         else concat(contextname, '.procedure_code')
     {% endif %}
         end as source_code_type,
@@ -18,5 +18,11 @@ select
     nullif({{dbt.split_part(string_text='pc0.procedurecode',delimiter_text="','",part_number=4)}},'') as mod3,
     nullif({{dbt.split_part(string_text='pc0.procedurecode',delimiter_text="','",part_number=5)}},'') as mod4,
     nullif({{dbt.split_part(string_text='pc0.procedurecode',delimiter_text="','",part_number=6)}},'') as mod5
-from {{ source('athena','PROCEDURECODE' ) }} pc0
-qualify row_number() over (partition by contextid,procedurecode order by case when deleteddatetime is null then 0 else 1 end, coalesce(lastmodifieddatetime,createddatetime) desc ) = 1
+from (
+    select
+      *,
+      row_number() over (partition by contextid,procedurecode order by case when deleteddatetime is null then 0 else 1 end, coalesce(lastmodifieddatetime,createddatetime) desc) as rn
+    from {{ source('athena','dataview_imports__procedurecode__v1' ) }}
+) pc0
+where
+  pc0.rn = 1

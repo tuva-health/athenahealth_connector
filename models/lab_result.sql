@@ -1,7 +1,7 @@
 select
-      cast(cro.contextid || '.' || cro.clinicalobservationid as {{ dbt.type_string() }} ) as lab_result_id
-    , cast( cro.contextid || '.' || p.enterpriseid as {{ dbt.type_string() }} ) as person_id
-    , cast( cro.contextid || '.' || p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
+      cast(cro.contextid as {{ dbt.type_string() }} ) || '.' || cast(cro.clinicalobservationid as {{ dbt.type_string() }} ) as lab_result_id
+    , cast(cro.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as person_id
+    , cast(cro.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
     , cast(d.contextid as {{ dbt.type_string() }} ) || '.' || cast(d.clinicalencounterid as {{ dbt.type_string() }} ) as encounter_id
     , cast(cr.externalaccessionidentifier as {{ dbt.type_string() }} ) as accession_number
     , cast(case when l.loinccode is not null then 'loinc'
@@ -47,24 +47,24 @@ select
     , cast('athena.' || cro.contextname as {{ dbt.type_string() }} ) as data_source
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
-from {{ source('athena','CLINICALRESULTOBSERVATION') }} as cro
-inner join  {{ source('athena','CLINICALRESULT') }} as cr
+from {{ source('athena','dataview_imports__clinicalresultobservation__v1') }} as cro
+inner join  {{ source('athena','dataview_imports__clinicalresult__v1') }} as cr
     on cro.clinicalresultid = cr.clinicalresultid and cro.contextid = cr.contextid
-inner join {{ source('athena','DOCUMENT' ) }} as d
+inner join {{ source('athena','dataview_imports__document__v1' ) }} as d
     on cr.documentid = d.documentid and cr.contextid = d.contextid
-inner join {{ source('athena','PATIENT' ) }} as p
+inner join {{ source('athena','dataview_imports__patient__v1' ) }} as p
     on d.patientid = p.patientid and d.contextid = p.contextid
-left join {{ source('athena','LOINC' ) }} as l
+left join {{ source('athena','dataview_imports__loinc__v1' ) }} as l
     on cro.loincid = l.loincid and cro.contextid = l.contextid
-left join {{ source('athena', 'CLINICALORDERTYPE' ) }} as crcot
+left join {{ source('athena','dataview_imports__clinicalordertype__v1' ) }} as crcot
     on cr.clinicalordertypeid = crcot.clinicalordertypeid
 left join {{ ref('terminology__loinc') }} as crcotl
     on crcot.loinc = crcotl.loinc
-left join {{ source('athena','LOCALCLINICALLABTEMPLATELIST') }} as lcltl
+left join {{ source('athena','dataview_imports__localclinicallabtemplatelist__v1') }} as lcltl
     on cro.localclinicallabtemplatelistid = lcltl.localclinicallabtemplatelistid and cro.contextid = lcltl.contextid
-left join {{ source('athena','LOCALCLINICALLABTEMPLATE') }} as lclt
+left join {{ source('athena','dataview_imports__localclinicallabtemplate__v1') }} as lclt
     on lcltl.localclinicallabtemplateid = lclt.localclinicallabtemplateid and lcltl.contextid =lclt.contextid
-left join {{ source('athena', 'CLINICALORDERTYPE' ) }} as lcltcot
+left join {{ source('athena','dataview_imports__clinicalordertype__v1' ) }} as lcltcot
     on lclt.clinicalordertypeid = lcltcot.clinicalordertypeid
 left join {{ ref('terminology__loinc') }} as lcltcotl
     on lcltcot.loinc = lcltcotl.loinc

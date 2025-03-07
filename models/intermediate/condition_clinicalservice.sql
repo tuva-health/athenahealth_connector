@@ -1,8 +1,8 @@
 select
-       cast(csd.contextid as {{ dbt.type_string() }} ) ||'.clinicalservice.' || cast(csd.clinicalservicediagnosisid as {{ dbt.type_string() }} ) as condition_id --event id?
-    , cast(csd.contextid as {{ dbt.type_string() }} ) ||'.' ||cast(p.enterpriseid as {{ dbt.type_string() }} ) as person_id
-    , cast(csd.contextid as {{ dbt.type_string() }} ) ||'.' ||cast(p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
-    , cast(csd.contextid || '.' || ce.clinicalencounterid as {{ dbt.type_string() }} ) as encounter_id
+      cast(csd.contextid as {{ dbt.type_string() }} ) || '.clinicalservice.' || cast(csd.clinicalservicediagnosisid as {{ dbt.type_string() }} ) as condition_id --event id?
+    , cast(csd.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as person_id
+    , cast(csd.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
+    , cast(csd.contextid as {{ dbt.type_string() }} ) || '.' || cast(ce.clinicalencounterid as {{ dbt.type_string() }} ) as encounter_id
     , cast(null as {{ dbt.type_string() }} ) as claim_id
     , cast(csd.createddatetime as date) as recorded_date
     , cast(null as date) as onset_date
@@ -23,14 +23,14 @@ select
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 --select top 100 *
-from {{source('athena','CLINICALSERVICEDIAGNOSIS')}} as csd
-inner join {{  source('athena','CLINICALSERVICEPROCEDURECODE') }} as cspc
+from {{source('athena','dataview_imports__clinicalservicediagnosis__v1')}} as csd
+inner join {{  source('athena','dataview_imports__clinicalserviceprocedurecode__v1') }} as cspc
     on csd.clinicalserviceproccodeid = cspc.clinicalserviceproccodeid  and csd.contextid = cspc.contextid
-inner join {{  source('athena','CLINICALSERVICE') }} as  cs
+inner join {{  source('athena','dataview_imports__clinicalservice__v1') }} as  cs
     on cs.clinicalserviceid = cspc.clinicalserviceid and cs.contextid = cspc.contextid
-inner join {{ source('athena','CLINICALENCOUNTER') }} as ce
+inner join {{ source('athena','dataview_imports__clinicalencounter__v1') }} as ce
     on cs.clinicalencounterid = ce.clinicalencounterid and cs.contextid = ce.contextid
-inner join {{ source('athena','PATIENT') }} as p
+inner join {{ source('athena','dataview_imports__patient__v1') }} as p
     on ce.patientid = p.patientid  and cs.contextid = p.contextid
 where csd.deletedby is null and csd.deleteddatetime is null
 and cspc.procedurecode is not null

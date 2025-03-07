@@ -3,8 +3,8 @@
 
 select
       cast(vc.contextid as {{ dbt.type_string() }} ) || '.visitcharge.' || cast(vc.visitchargeid as {{ dbt.type_string() }} ) as procedure_id
-    , cast(vc.contextid || '.' || p.enterpriseid as {{ dbt.type_string() }} ) as person_id
-    , cast(vc.contextid || '.' || p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
+    , cast(vc.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as person_id
+    , cast(vc.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
     , cast(null as {{ dbt.type_string() }} ) as encounter_id
     , cast(null as {{ dbt.type_string() }} ) as claim_id
     , cast(vc.fromdatedatetime as date) as procedure_date
@@ -19,15 +19,14 @@ select
     , cast(epc.mod3 as {{ dbt.type_string() }} ) as modifier_3
     , cast(epc.mod4 as {{ dbt.type_string() }} ) as modifier_4
     , cast(epc.mod5 as {{ dbt.type_string() }} ) as modifier_5
-    , cast(vc.contextid || '.prov.' || vc.providerid  as {{ dbt.type_string() }} ) as practitioner_id
+    , cast(vc.contextid as {{ dbt.type_string() }} ) || '.prov.' || cast(vc.providerid  as {{ dbt.type_string() }} ) as practitioner_id
     , cast('athena.' || vc.contextname as {{ dbt.type_string() }} ) as data_source
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
---select *
-From {{ source('athena','VISITCHARGE') }} as vc
-inner join {{ source('athena','VISIT') }} as v
+from {{ source('athena','dataview_imports__visitcharge__v1') }} as vc
+inner join {{ source('athena','dataview_imports__visit__v1') }} as v
     on vc.visitid = v.visitid and vc.contextid = v.contextid
-inner join {{ source('athena','PATIENT') }} as p
+inner join {{  source('athena','dataview_imports__patient__v1') }} as p
     on v.patientid = p.patientid and v.contextid = p.contextid
 left join {{ref('enhanced_procedure_code') }} as epc
     on  vc.procedurecode = epc.procedurecode and vc.contextid = epc.contextid

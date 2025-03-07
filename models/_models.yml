@@ -1,154 +1,182 @@
 version: 2
 
 models:
-# clinical input models
+  # clinical input models
   - name: condition
     description: patient conditions
     config:
-      schema: input_layer
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer{% else %}input_layer{%- endif -%}
       materialized: table
 
   - name: encounter
     description: patient encounters
     config:
-      schema: input_layer
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer{% else %}input_layer{%- endif -%}
       materialized: table
 
   - name: lab_result
     description: patient lab results
     config:
-      schema: input_layer
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer{% else %}input_layer{%- endif -%}
       materialized: table
 
   - name: location
     description: organization locations
     config:
-      schema: input_layer
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer{% else %}input_layer{%- endif -%}
       materialized: table
 
   - name: medication
     description: patient medications
     config:
-      schema: input_layer
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer{% else %}input_layer{%- endif -%}
       materialized: table
 
   - name: observation
     description: patient observations
     config:
-      schema: input_layer
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer{% else %}input_layer{%- endif -%}
       materialized: table
 
   - name: patient
     description: patients
     config:
-      schema: input_layer
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer{% else %}input_layer{%- endif -%}
       materialized: table
 
   - name: practitioner
     description: organziation practitioners
     config:
-      schema: input_layer
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer{% else %}input_layer{%- endif -%}
       materialized: table
 
   - name: procedure
     description: patient procedures
     config:
-      schema: input_layer
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer{% else %}input_layer{%- endif -%}
       materialized: table
 
-#### staging models
+  #### staging models
 
   - name: condition_chart
     description: conditions from CHARTSNOMEDICD
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: condition_claim
     description: conditions from CLAIMDIAGNOSIS
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: condition_clinicalservice
     description: conditions from CLINICALSERVICE
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: condition_document_diagnosis
     description: conditions from DOCUMENTDIAGNOSIS
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: condition_encounter
     description: conditions from CLINICALENCOUNTERDXICD10
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: condition_patient_problem
     description: conditions from PATIENTPROBLEM
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: condition_patient_risk
     description: conditions from PATIENTRISKCONDITION
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: condition_patient_snomed_icd
     description: conditions from PATIENTSNOMEDICD
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: condition_patient_snomed_problem
     description: conditions from PATIENTSNOMEDPROBLEM
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: enhanced_procedure_code
     description: intermediary model to break out modifiers from procedure codes
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: medication_patient_medication
     description: medications from PATIENTMEDICATION
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: medication_prescription
     description: medications from PATIENTMEDICATION
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: observation_clinical_result
     description: conditions from CLINICALRESULTOBSERVATION
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: observation_vital
     description: conditions from VITALSIGN
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: practitioner_clinical_provider
     description: providers from CLINICALPROVIDER
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: practitioner_provider
     description: procedures from PROVIDER
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: procedure_clinical_service
     description: procedures from CLINICALSERVICEPROCEDURECODE
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: procedure_order_auth
     description: procedures from ORDERAUTHCPT
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}
 
   - name: procedure_visit_charge
     description: procedures from VISITCHARGE
     config:
-      schema: input_layer_stage
+      schema: |
+        {%- if var('tuva_schema_prefix',None) != None -%}{{var('tuva_schema_prefix')}}_input_layer_stage{% else %}input_layer_stage{%- endif -%}

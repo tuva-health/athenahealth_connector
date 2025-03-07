@@ -13,4 +13,4 @@ select
     , cast(d.contextname as {{ dbt.type_string() }} ) as data_source
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
-from {{ source('athena','DEPARTMENT') }} d
+from {{ source('athena','dataview_imports__department__v1') }} d

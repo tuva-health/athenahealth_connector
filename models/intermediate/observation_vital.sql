@@ -9,6 +9,8 @@ select
     else substring(vs.key, 0, position('.', vs.key, position('.', vs.key)+1 )-1)
     {% elif target.type == 'bigquery' %}
     else concat(split(vs.key, '.')[safe_offset(0)], '.', split(vs.key, '.')[safe_offset(1)])
+    {% elif target.type == 'athena' %}
+    else split_part(vs.key, '.', 1) || '.' || split_part(vs.key, '.', 2)
     {% endif %}
     end as {{ dbt.type_string() }}) as panel_id
     , coalesce(cast(ce.encounterdate as date), cast(vs.createddatetime as date)) as observation_date
@@ -37,9 +39,9 @@ select
     , cast('athena.' || vs.contextname  as {{ dbt.type_string() }} ) as data_source
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
-from {{ source('athena','VITALSIGN') }} vs
-inner join {{ source('athena','CLINICALENCOUNTER') }} ce
+from {{ source('athena','dataview_imports__vitalsign__v1') }} vs
+inner join {{ source('athena','dataview_imports__clinicalencounter__v1') }} ce
     on vs.clinicalencounterid = ce.clinicalencounterid and vs.contextid = ce.contextid
-inner join {{ source('athena','PATIENT') }} P
+inner join {{ source('athena','dataview_imports__patient__v1') }} P
     on ce.patientid = p.patientid and ce.contextid = p.contextid
 where vs.deletedby is null and vs.deleteddatetime is null

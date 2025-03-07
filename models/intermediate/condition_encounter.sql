@@ -22,13 +22,13 @@ select
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 -- select top 100 *
-from {{source('athena','CLINICALENCOUNTER')}} as ce
-inner join {{source('athena','PATIENT')}} p
+from {{source('athena','dataview_imports__clinicalencounter__v1')}} as ce
+inner join {{source('athena','dataview_imports__patient__v1')}} p
     on ce.patientid = p.patientid and ce.contextid = p.contextid
-inner join {{source('athena','CLINICALENCOUNTERDIAGNOSIS')}} as ced
+inner join {{source('athena','dataview_imports__clinicalencounterdiagnosis__v1')}} as ced
     on ce.clinicalencounterid = ced.clinicalencounterid and ce.contextid = ced.contextid
-inner join {{source('athena','CLINICALENCOUNTERDXICD10')}} as ceicd
+inner join {{source('athena','dataview_imports__clinicalencounterdxicd10__v1')}} as ceicd
     on ced.clinicalencounterdxid = ceicd.clinicalencounterdxid and ce.contextid = ceicd.contextid
-inner join {{source('athena','ICDCODEALL')}} as  i
+inner join {{source('athena','dataview_imports__icdcodeall__v1')}} as  i
     on ceicd.icdcodeid  = i.icdcodeid and ce.contextid = i.contextid
 where ced.deletedby is null and ced.deleteddatetime is null

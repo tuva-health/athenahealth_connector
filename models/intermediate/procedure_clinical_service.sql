@@ -2,9 +2,9 @@
 
 select
       cast(cspc.contextid as {{ dbt.type_string() }} ) || '.clinserv.' || cast(cspc.clinicalserviceproccodeid as {{ dbt.type_string() }} ) as procedure_id
-    , cast(cs.contextid || '.' || p.enterpriseid as {{ dbt.type_string() }} ) as person_id
-    , cast(cs.contextid || '.' || p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
-    , cast(cs.contextid || '.' || ce.clinicalencounterid as {{ dbt.type_string() }} ) as encounter_id
+    , cast(cs.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as person_id
+    , cast(cs.contextid as {{ dbt.type_string() }} ) || '.' || cast(p.enterpriseid as {{ dbt.type_string() }} ) as patient_id
+    , cast(cs.contextid as {{ dbt.type_string() }} ) || '.' || cast(ce.clinicalencounterid as {{ dbt.type_string() }} ) as encounter_id
     , cast(null as {{ dbt.type_string() }} ) as claim_id
     , cast(ce.encounterdate as date) as procedure_date
     , cast('hcpcs' as {{ dbt.type_string() }} ) as source_code_type
@@ -23,12 +23,12 @@ select
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 --select *
-From {{  source('athena','CLINICALSERVICE') }} as  cs
-inner join {{  source('athena','CLINICALSERVICEPROCEDURECODE') }} as cspc
+From {{ source('athena','dataview_imports__clinicalservice__v1') }} as  cs
+inner join {{ source('athena','dataview_imports__clinicalserviceprocedurecode__v1') }} as cspc
     on cs.CLINICALSERVICEID = cspc.CLINICALSERVICEID and cs.contextid = cspc.contextid
-inner join {{ source('athena','CLINICALENCOUNTER') }} as ce
+inner join {{ source('athena','dataview_imports__clinicalencounter__v1') }} as ce
     on cs.CLINICALENCOUNTERID = ce.CLINICALENCOUNTERID and cs.contextid = ce.contextid
-inner join {{ source('athena','PATIENT') }} as p
+inner join {{ source('athena','dataview_imports__patient__v1') }} as p
     on ce.PATIENTID = p.patientid  and cs.contextid = p.contextid
 left join {{ ref('enhanced_procedure_code') }}  as epc
     on  cspc.procedurecode = epc.procedurecode and cs.contextid = epc.contextid

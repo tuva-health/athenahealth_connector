@@ -22,7 +22,7 @@ select
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 --select top 100 *
-from {{source('athena','PATIENTPROBLEM')}} pp
-left join {{source('athena','CHART')}} c
+from {{source('athena','dataview_imports__patientproblem__v1')}} pp
+left join {{source('athena','dataview_imports__chart__v1')}} c
     on pp.chartid = c.chartid and pp.contextid = c.contextid
 where pp.deleteddatetime is null and pp.deactivateddatetime is null

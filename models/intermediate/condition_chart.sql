@@ -22,12 +22,11 @@ select
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 -- select top 100 *
-from {{source('athena','CHARTSNOMEDICD')}} as csi
-inner join  {{source('athena','CHARTSNOMEDICDEVENT')}} as csie
+from {{source('athena','dataview_imports__chartsnomedicd__v1')}} as csi
+inner join  {{source('athena','dataview_imports__chartsnomedicdevent__v1')}} as csie
     on csi.chartsnomedicdeventid = csie.chartsnomedicdeventid and csi.contextid = csie.contextid
-inner join {{source('athena','CHART')}} as c
+inner join {{source('athena','dataview_imports__chart__v1')}} as c
     on csie.chartid = c.chartid and csi.contextid = c.contextid
-inner join {{source('athena','ICDCODEALL')}} as i
+inner join {{source('athena','dataview_imports__icdcodeall__v1')}} as i
     on csi.icdcodeallid = i.icdcodeid and csi.contextid = i.contextid
 where csi.deletedby is null and csi.deleteddatetime is null
-

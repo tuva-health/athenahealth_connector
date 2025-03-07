@@ -22,9 +22,9 @@ select
     , cast(null as {{ dbt.type_string() }} ) as file_name
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 -- select top 100 *
-from {{source('athena','PATIENTRISKCONDITION') }} as prc
-left join {{ source('athena', 'RISKCONDITIONSTATENAME') }} as rcsn
+from {{source('athena','dataview_imports__patientriskcondition__v1') }} as prc
+left join {{ source('athena','dataview_imports__riskconditionstatename__v1') }} as rcsn
     on prc.riskconditionstatenameid = rcsn.riskconditionstatenameid and prc.contextid = rcsn.contextid
-left join {{source('athena','PATIENT') }} p
+left join {{source('athena','dataview_imports__patient__v1') }} p
     on prc.patientid = p.patientid and prc.contextid = p.contextid
 where prc.deleteddatetime is null and prc.deletedby is null

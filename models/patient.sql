@@ -29,10 +29,10 @@ select
                         else 999 end
                      ) as registration_order
 -- select *
-from {{source('athena','PATIENT')}} as patient
-inner join {{source('athena','CLIENT')}} as client
+from {{ source('athena','dataview_imports__patient__v1')}} as patient
+inner join {{source('athena','dataview_imports__client__v1')}} as client
 on patient.patientid = client.clientid and patient.contextid = client.contextid
-left join {{source('athena','PATIENTRACE')}} as patientrace
+left join {{source('athena','dataview_imports__patientrace__v1')}} as patientrace
     on patient.patientid = patientrace.patientid and patient.contextid = patientrace.contextid
         and patientrace.deleteddatetime is null and patientrace.deletedby is null and patientrace.primaryraceyn = 'Y'
 where patient.deletedby is null and patient.deleteddatetime is null

@@ -23,10 +23,10 @@ select
 --    , cast(dd.lastdatasyncdt as {{ dbt.type_timestamp() }} ) as ingest_datetime
     , cast(null as {{ dbt.type_timestamp() }} ) as ingest_datetime
 -- select top 100 *
-from {{source('athena','DOCUMENTDIAGNOSIS')}} as dd
-inner join  {{source('athena','DOCUMENT')}} as d
+from {{source('athena','dataview_imports__documentdiagnosis__v1')}} as dd
+inner join  {{source('athena','dataview_imports__document__v1')}} as d
     on dd.documentid = d.documentid and dd.contextid = d.contextid
-inner join  {{source('athena','CHART')}} as c
+inner join  {{source('athena','dataview_imports__chart__v1')}} as c
     on d.chartid = c.chartid and dd.contextid = c.contextid
 where dd.deleteddatetime is null and dd.deletedby is null
 and d.deleteddatetime is null and d.deletedby is null and  d.STATUS <> 'DELETED'
