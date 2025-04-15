@@ -1,0 +1,75 @@
+version: 2
+models:
+- name: stg_athena_clinical_encounter_diagnosis
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - CLINICALENCOUNTERDXID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: CLINICALENCOUNTERDXID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CLINICALENCOUNTERID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: DIAGNOSISCODE
+    description: ''
+  - name: SNOMEDCODE
+    description: ''
+  - name: STATUS
+    description: ''
+  - name: LATERALITY
+    description: ''
+  - name: NOTE
+    description: ''
+  - name: ORDERING
+    description: ''
+  - name: DELETEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DELETEDBY
+    description: ''
+  - name: CREATEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREATEDBY
+    description: ''
+  - name: LASTUPDATED
+    description: ''

@@ -1,0 +1,42 @@
+version: 2
+models:
+- name: int_athena_practitioner_provider
+  description: ''
+  columns:
+  - name: PRACTITIONER_ID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+    - unique:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: NPI
+    description: ''
+  - name: FIRST_NAME
+    description: ''
+  - name: LAST_NAME
+    description: ''
+  - name: PRACTICE_AFFILIATION
+    description: ''
+  - name: SPECIALTY
+    description: ''
+  - name: SUB_SPECIALTY
+    description: ''
+  - name: DATA_SOURCE
+    description: ''
+  - name: FILE_NAME
+    description: ''
+  - name: INGEST_DATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREDENTIALS
+    description: ''
+  - name: TUVA_LAST_RUN
+    description: ''

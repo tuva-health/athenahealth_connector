@@ -1,0 +1,258 @@
+version: 2
+models:
+- name: stg_athena_patient
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - PATIENTID
+      - ENTERPRISEID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: PATIENTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: DEFAULTIMAGINGPROVIDERID
+    description: ''
+  - name: FAMILYID
+    description: ''
+  - name: ENTERPRISEID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: FIRSTNAME
+    description: ''
+  - name: LASTNAME
+    description: ''
+  - name: MIDDLEINITIAL
+    description: ''
+  - name: NAMESUFFIX
+    description: ''
+  - name: SEX
+    description: ''
+  - name: DOB
+    description: ''
+  - name: ADDRESS
+    description: ''
+  - name: ADDRESS2
+    description: ''
+  - name: CITY
+    description: ''
+  - name: STATE
+    description: ''
+  - name: ZIP
+    description: ''
+  - name: PATIENTEMPLOYERID
+    description: ''
+  - name: PATIENTHOMEPHONE
+    description: ''
+  - name: WORKPHONE
+    description: ''
+  - name: MOBILEPHONE
+    description: ''
+  - name: CONTACTPREFERENCE
+    description: ''
+  - name: EMAIL
+    description: ''
+  - name: DONOTCALLYN
+    description: ''
+  - name: ETHNICITY
+    description: ''
+  - name: CDCETHNICITYCODE
+    description: ''
+  - name: RACE
+    description: ''
+  - name: CDCRACECODE
+    description: ''
+  - name: LANGUAGE
+    description: ''
+  - name: ISO6392CODE
+    description: ''
+  - name: MARITALSTATUS
+    description: ''
+  - name: SMSOPTINDATE
+    description: ''
+  - name: DECEASEDDATE
+    description: ''
+  - name: PATIENTSTATUS
+    description: ''
+  - name: HOLDSTATEMENTREASON
+    description: ''
+  - name: NEWPATIENTID
+    description: ''
+  - name: REGISTRATIONDATE
+    description: ''
+  - name: PRIMARYPROVIDERID
+    description: ''
+  - name: PREFERREDLABID
+    description: ''
+  - name: SELFPAYRESTRICTIONYN
+    description: ''
+  - name: OCCUPATION
+    description: ''
+  - name: REFERRALSOURCE
+    description: ''
+  - name: REFERRALSOURCEOTHER
+    description: ''
+  - name: GUARANTORFIRSTNAME
+    description: ''
+  - name: GUARANTORLASTNAME
+    description: ''
+  - name: GUARANTORMIDDLEINITIAL
+    description: ''
+  - name: GUARANTORNAMESUFFIX
+    description: ''
+  - name: GUARANTORDOB
+    description: ''
+  - name: GUARANTORSSN
+    description: ''
+  - name: GUARANTORRELATIONSHIP
+    description: ''
+  - name: GUARANTORADDRESS
+    description: ''
+  - name: GUARANTORADDRESS2
+    description: ''
+  - name: GUARANTORCITY
+    description: ''
+  - name: GUARANTORSTATE
+    description: ''
+  - name: GUARANTORZIP
+    description: ''
+  - name: GUARANTOREMAIL
+    description: ''
+  - name: GUARANTOREMPLOYERID
+    description: ''
+  - name: GUARDIANFIRSTNAME
+    description: ''
+  - name: GUARDIANLASTNAME
+    description: ''
+  - name: GUARDIANMIDDLEINITIAL
+    description: ''
+  - name: GUARDIANNAMESUFFIX
+    description: ''
+  - name: EMERGENCYCONTACTNAME
+    description: ''
+  - name: EMERGENCYCONTACTRELATIONSHIP
+    description: ''
+  - name: EMERGENCYCONTACTPHONE
+    description: ''
+  - name: PATIENTSSN
+    description: ''
+  - name: REGISTRATIONDEPARTMENTID
+    description: ''
+  - name: CURRENTDEPARTMENTID
+    description: ''
+  - name: PROVIDERGROUPID
+    description: ''
+  - name: UNCONFIRMEDFAMILYSIZE
+    description: ''
+  - name: UNCONFINCOMEPERPAYPERIOD
+    description: ''
+  - name: UNCONFIRMEDPAYPERIOD
+    description: ''
+  - name: UNCONFIRMEDYEARLYINCOME
+    description: ''
+  - name: UNCONFIRMEDPOVERTYLEVEL
+    description: ''
+  - name: UNCONFIRMEDFAMILYSZEDECLYN
+    description: ''
+  - name: UNCONFIRMEDINCOMEDECLINEDYN
+    description: ''
+  - name: GUARANTORPHONE
+    description: ''
+  - name: AGRICULTURALWORKER
+    description: ''
+  - name: AGRICULTURALWORKERTYPES
+    description: ''
+  - name: HOMELESSSTATUS
+    description: ''
+  - name: HOMELESSSTATUSTYPES
+    description: ''
+  - name: SCHOOLBASEDHEALTHCENTERPNT
+    description: ''
+  - name: VETERANSTATUS
+    description: ''
+  - name: TESTPATIENTYN
+    description: ''
+  - name: PRIVACYNOTICEGIVENFLAG
+    description: ''
+  - name: PRIVACYNOTICEGIVENDATE
+    description: ''
+  - name: PRIVACYNOTICEGIVENDEPTID
+    description: ''
+  - name: PRIVACYNOTICEGIVENBY
+    description: ''
+  - name: PRIVNOTICENOTGIVENREASON
+    description: ''
+  - name: PRIVNOTICENOTGIVENNOTE
+    description: ''
+  - name: PATIENTSIGONFILEFLAG
+    description: ''
+  - name: PATIENTSIGEFFECTIVEDATE
+    description: ''
+  - name: PATIENTSIGEXPIRATIONDATE
+    description: ''
+  - name: INSUREDSIGONFILEFLAG
+    description: ''
+  - name: INSUREDSIGEFFECTIVEDATE
+    description: ''
+  - name: INSUREDSIGEXPIRATIONDATE
+    description: ''
+  - name: CONSENTTOCALLFLAG
+    description: ''
+  - name: CONSENTTOCALLEFFDATE
+    description: ''
+  - name: GENDERIDENTITY
+    description: ''
+  - name: SEXUALORIENTATION
+    description: ''
+  - name: CONSENTTOTEXTYN
+    description: ''
+  - name: PUBLICHOUSING
+    description: ''
+  - name: DEFAULTPRESCRIPTIONPROVID
+    description: ''
+  - name: RESTRICTREPORTINGYN
+    description: ''
+  - name: TRANSLATEDHOMEPHONEINDEX
+    description: ''
+  - name: TRANSLATEDMOBILEPHONEINDEX
+    description: ''
+  - name: TRANSLATEDWORKPHONEINDEX
+    description: ''
+  - name: ASSIGNEDSEXATBIRTH
+    description: ''
+  - name: DELETEDBY
+    description: ''
+  - name: DELETEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: LASTUPDATED
+    description: ''

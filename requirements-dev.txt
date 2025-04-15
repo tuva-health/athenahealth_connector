@@ -1,0 +1,4 @@
+dbt-core
+dbt-snowflake==1.9.2
+sqlfluff-templater-dbt==3.3.1
+dbt-invoke

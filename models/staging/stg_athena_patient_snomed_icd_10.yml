@@ -1,0 +1,85 @@
+version: 2
+models:
+- name: stg_athena_patient_snomed_icd_10
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - PATIENTSNOMEDICD10ID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: PATIENTSNOMEDICD10ID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: SNOMEDCODE
+    description: ''
+  - name: ICDCODEALLID
+    description: ''
+    tests:
+      - relationships:
+          to: ref('stg_athena_icd_code_all')
+          field: ICDCODEID
+          tags: [ 'tuva_dqi_sev_3', 'dqi' ]
+          config:
+            severity: warn
+  - name: CHARTID
+    description: ''
+  - name: CLINICALENCOUNTERID
+    description: ''
+  - name: DELETEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DELETEDBY
+    description: ''
+  - name: CREATEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREATEDBY
+    description: ''
+  - name: LASTMODIFIEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: LASTMODIFIEDBY
+    description: ''
+  - name: LASTUPDATED
+    description: ''

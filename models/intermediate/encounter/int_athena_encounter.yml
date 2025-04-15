@@ -1,0 +1,99 @@
+version: 2
+models:
+- name: int_athena_encounter
+  description: ''
+  tests:
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: ENCOUNTER_ID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+    - unique:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: PERSON_ID
+    description: ''
+  - name: PATIENT_ID
+    description: ''
+  - name: ENCOUNTER_TYPE
+    description: ''
+  - name: ENCOUNTER_START_DATE
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: ENCOUNTER_END_DATE
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: LENGTH_OF_STAY
+    description: ''
+  - name: ADMIT_SOURCE_CODE
+    description: ''
+  - name: ADMIT_SOURCE_DESCRIPTION
+    description: ''
+  - name: ADMIT_TYPE_CODE
+    description: ''
+  - name: ADMIT_TYPE_DESCRIPTION
+    description: ''
+  - name: DISCHARGE_DISPOSITION_CODE
+    description: ''
+  - name: DISCHARGE_DISPOSITION_DESCRIPTION
+    description: ''
+  - name: ATTENDING_PROVIDER_ID
+    description: ''
+  - name: ATTENDING_PROVIDER_NAME
+    description: ''
+  - name: FACILITY_ID
+    description: ''
+  - name: FACILITY_NAME
+    description: ''
+  - name: PRIMARY_DIAGNOSIS_CODE_TYPE
+    description: ''
+  - name: PRIMARY_DIAGNOSIS_CODE
+    description: ''
+  - name: PRIMARY_DIAGNOSIS_DESCRIPTION
+    description: ''
+  - name: DRG_CODE_TYPE
+    description: ''
+  - name: DRG_CODE
+    description: ''
+  - name: DRG_DESCRIPTION
+    description: ''
+  - name: PAID_AMOUNT
+    description: ''
+  - name: ALLOWED_AMOUNT
+    description: ''
+  - name: CHARGE_AMOUNT
+    description: ''
+  - name: DATA_SOURCE
+    description: ''
+  - name: FILE_NAME
+    description: ''
+  - name: INGEST_DATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn

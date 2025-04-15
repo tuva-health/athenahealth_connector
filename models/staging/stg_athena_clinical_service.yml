@@ -1,0 +1,70 @@
+version: 2
+models:
+- name: stg_athena_clinical_service
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - CLINICALSERVICEID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: CLINICALSERVICEID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CLINICALENCOUNTERID
+    description: ''
+  - name: DOCUMENTID
+    description: ''
+  - name: TYPE
+    description: ''
+  - name: SOURCE
+    description: ''
+  - name: ORDERING
+    description: ''
+  - name: SINGLETONPROCEDURECODENAME
+    description: ''
+  - name: CREATEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREATEDBY
+    description: ''
+  - name: DELETEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DELETEDBY
+    description: ''
+  - name: LASTUPDATED
+    description: ''

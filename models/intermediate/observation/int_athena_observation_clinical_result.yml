@@ -1,0 +1,72 @@
+version: 2
+models:
+- name: int_athena_observation_clinical_result
+  description: ''
+  columns:
+  - name: OBSERVATION_ID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+    - unique:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: PERSON_ID
+    description: ''
+  - name: PATIENT_ID
+    description: ''
+  - name: ENCOUNTER_ID
+    description: ''
+  - name: PANEL_ID
+    description: ''
+  - name: OBSERVATION_DATE
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: OBSERVATION_TYPE
+    description: ''
+  - name: SOURCE_CODE_TYPE
+    description: ''
+  - name: SOURCE_CODE
+    description: ''
+  - name: SOURCE_DESCRIPTION
+    description: ''
+  - name: NORMALIZED_CODE_TYPE
+    description: ''
+  - name: NORMALIZED_CODE
+    description: ''
+  - name: NORMALIZED_DESCRIPTION
+    description: ''
+  - name: RESULT
+    description: ''
+  - name: SOURCE_UNITS
+    description: ''
+  - name: NORMALIZED_UNITS
+    description: ''
+  - name: SOURCE_REFERENCE_RANGE_LOW
+    description: ''
+  - name: SOURCE_REFERENCE_RANGE_HIGH
+    description: ''
+  - name: NORMALIZED_REFERENCE_RANGE_LOW
+    description: ''
+  - name: NORMALIZED_REFERENCE_RANGE_HIGH
+    description: ''
+  - name: DATA_SOURCE
+    description: ''
+  - name: FILE_NAME
+    description: ''
+  - name: INGEST_DATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn

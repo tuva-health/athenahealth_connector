@@ -1,0 +1,12 @@
+packages:
+  - package: tuva-health/the_tuva_project
+    version: 0.14.4
+  - package: dbt-labs/dbt_utils
+    version: 1.3.0
+  - package: metaplane/dbt_expectations
+    version: 0.10.8
+  - git: https://github.com/tuva-health/dbt-data-reliability.git
+    revision: 8e21eb2016bb61e3b3c86576a9b50689e7542890
+  - package: godatadriven/dbt_date
+    version: 0.11.0
+sha1_hash: 453b069733c85b386250aee012384599968351de

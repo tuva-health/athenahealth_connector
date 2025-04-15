@@ -1,6 +1,5 @@
 {{ dbt_utils.union_relations(
-    relations=[ ref('procedure_clinical_service'),
-                ref('procedure_order_auth'),
-                ref('procedure_visit_charge')]
+    relations=[ ref('int_athena_procedure_clinical_service'),
+                ref('int_athena_procedure_order_auth'),
+                ref('int_athena_procedure_visit_charge')]
 ) }}
-

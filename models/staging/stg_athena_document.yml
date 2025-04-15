@@ -1,0 +1,432 @@
+version: 2
+models:
+- name: stg_athena_document
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - DOCUMENTID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: DOCUMENTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: PATIENTID
+    description: ''
+  - name: CHARTID
+    description: ''
+  - name: DEPARTMENTID
+    description: ''
+  - name: CLINICALENCOUNTERID
+    description: ''
+  - name: CREATEDCLINICALENCOUNTERID
+    description: ''
+  - name: ORDERDOCUMENTID
+    description: ''
+  - name: CLINICALPROVIDERID
+    description: ''
+  - name: APPOINTMENTID
+    description: ''
+  - name: DOCUMENTCLASS
+    description: ''
+  - name: DOCUMENTSUBCLASS
+    description: ''
+  - name: DOCUMENTPRECLASS
+    description: ''
+  - name: DOCUMENTCATEGORY
+    description: ''
+  - name: DOCUMENTSUBJECT
+    description: ''
+  - name: DELEGATESIGNEDOFFBY
+    description: ''
+  - name: NEEDSPROVIDERDELEGATEACKYN
+    description: ''
+  - name: CLINICALORDERTYPE
+    description: ''
+  - name: CLINICALORDERTYPEGROUP
+    description: ''
+  - name: FBDMEDID
+    description: ''
+  - name: CLINICALPROVIDERORDERTYPE
+    description: ''
+  - name: CLINICALORDERGENUS
+    description: ''
+  - name: STATUS
+    description: ''
+  - name: PROVIDERUSERNAME
+    description: ''
+  - name: CVX
+    description: ''
+  - name: VACCINEROUTE
+    description: ''
+  - name: PRIORITY
+    description: ''
+  - name: ASSIGNEDTO
+    description: ''
+  - name: NOTIFIER
+    description: ''
+  - name: SOURCE
+    description: ''
+  - name: ROUTE
+    description: ''
+  - name: SPECIMENDESCRIPTION
+    description: ''
+  - name: SPECIMENCOLLECTEDBY
+    description: ''
+  - name: SPECIMENCOLLECTEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: SPECIMENDRAWLOCATION
+    description: ''
+  - name: SPECIMENSOURCE
+    description: ''
+  - name: ALARMDAYS
+    description: ''
+  - name: ALARMDATE
+    description: ''
+  - name: IMAGEEXISTSYN
+    description: ''
+  - name: ORDERDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREATEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREATEDBY
+    description: ''
+  - name: RECEIVEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: REVIEWEDBY
+    description: ''
+  - name: REVIEWEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: OBSERVATIONDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DEACTIVATEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DEACTIVATEDBY
+    description: ''
+  - name: FUTURESUBMITDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DENIEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DENIEDBY
+    description: ''
+  - name: DOCUMENTTEXTDATA
+    description: ''
+  - name: APPROVEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: APPROVEDBY
+    description: ''
+  - name: DELETEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DELETEDBY
+    description: ''
+  - name: ORDERTEXT
+    description: ''
+  - name: PROVIDERNOTE
+    description: ''
+  - name: PATIENTNOTE
+    description: ''
+  - name: EXTERNALNOTE
+    description: ''
+  - name: RESULTNOTES
+    description: ''
+  - name: INTERFACEVENDORNAME
+    description: ''
+  - name: OUTOFNETWORKREFREASONNAME
+    description: ''
+  - name: EXACTDUPLICATEDOCUMENTID
+    description: ''
+  - name: AIRLOCKYN
+    description: ''
+  - name: ORDERING
+    description: ''
+  - name: CALLBACKNAME
+    description: ''
+  - name: CALLBACKNUMBER
+    description: ''
+  - name: CALLBACKNUMBERTYPE
+    description: ''
+  - name: CLIENTBILL
+    description: ''
+  - name: CLINICALENCOUNTERDATE
+    description: ''
+  - name: CLINICALEPISODEID
+    description: ''
+  - name: CLINICALPAPERFORMID
+    description: ''
+  - name: CLINICALPROVIDERORDERTYPEID
+    description: ''
+  - name: CONFIDENTIALYN
+    description: ''
+  - name: CONSENTDOCUMENTID
+    description: ''
+  - name: CONTAINSRESULTQUALITYIMAGEYN
+    description: ''
+  - name: COSIGNATURE1BY
+    description: ''
+  - name: COSIGNATURE1TIMESTAMP
+    description: ''
+  - name: COSIGNATURE2BY
+    description: ''
+  - name: COSIGNATURE2TIMESTAMP
+    description: ''
+  - name: CUSTOMORDERCODE
+    description: ''
+  - name: DEFAULTSOURCE
+    description: ''
+  - name: DEFAULTSOURCEID
+    description: ''
+  - name: DISCUSSEDBY
+    description: ''
+  - name: DISCUSSEDTIMESTAMP
+    description: ''
+  - name: DOCUMENTATIONONLYYN
+    description: ''
+  - name: DOCUMENTBARCODEID
+    description: ''
+  - name: DOCUMENTERRORACTIONID
+    description: ''
+  - name: DOCUMENTLABELTEXT
+    description: ''
+  - name: DOCUMENTPROCESSINGRULEID
+    description: ''
+  - name: DOCUMENTSUBMISSIONBATCHID
+    description: ''
+  - name: DOCUMENTWORKFLOWNAME
+    description: ''
+  - name: DUPLICATEGROUP
+    description: ''
+  - name: ERRORFLAG
+    description: ''
+  - name: FAXGROUPID
+    description: ''
+  - name: FAXWORKFLOWCAPTURERESULTID
+    description: ''
+  - name: FORCEDOUBLEDATAENTRY
+    description: ''
+  - name: FOREIGNDOCUMENTNUMBER
+    description: ''
+  - name: FROMFAXNUMBER
+    description: ''
+  - name: FROMREMOTE
+    description: ''
+  - name: FULFILLSORDERCHECKLISTVALUEID
+    description: ''
+  - name: GLOBALCLINICALPAPERFORMID
+    description: ''
+  - name: HISTORICALYN
+    description: ''
+  - name: IMAGEFILELINK
+    description: ''
+  - name: IMAGEGROUPID
+    description: ''
+  - name: INCOMINGSTATUS
+    description: ''
+  - name: INPTSTAYID
+    description: ''
+  - name: INTERFACEMESSAGEID
+    description: ''
+  - name: INTERFACEVENDORID
+    description: ''
+  - name: INTERNALINTERPRETATION
+    description: ''
+  - name: INTERNALTEXT
+    description: ''
+  - name: INUNCONFIGUREDBUCKETYN
+    description: ''
+  - name: NEWDOSAGE
+    description: ''
+  - name: NEWRXNAME
+    description: ''
+  - name: NONATHENAYN
+    description: ''
+  - name: NUMPRESCRIPTIONS
+    description: ''
+  - name: OBSERVATIONTIMEENTERED
+    description: ''
+  - name: OCRPRIORITY
+    description: ''
+  - name: OCRSTATUS
+    description: ''
+  - name: OCRTEMPLATEID
+    description: ''
+  - name: OCRTEMPLATEPROCESSINGTIME
+    description: ''
+  - name: OFFMENUYN
+    description: ''
+  - name: ORDERINVOICEYN
+    description: ''
+  - name: OUTBOUNDYN
+    description: ''
+  - name: OUTOFNETWORKREFERRALREASONID
+    description: ''
+  - name: PARENTORDERDOCUMENTID
+    description: ''
+  - name: PARENTREQUISITIONID
+    description: ''
+  - name: PATIENTCASEID
+    description: ''
+  - name: PATIENTDOB
+    description: ''
+  - name: PATIENTFACINGSTATUS
+    description: ''
+  - name: PERFORMINGPROVIDER
+    description: ''
+  - name: PERSISTENCEYN
+    description: ''
+  - name: PRACTICEFAXID
+    description: ''
+  - name: PRESIGNED
+    description: ''
+  - name: PROCESSINGHOLDTIMESTAMP
+    description: ''
+  - name: PROVIDERDELEGATEACK
+    description: ''
+  - name: PROVIDERDELEGATOR
+    description: ''
+  - name: SCHEDULEWITHIN
+    description: ''
+  - name: SPECIALTYID
+    description: ''
+  - name: VERSIONTOKEN
+    description: ''
+  - name: SPLITBYPATIENT
+    description: ''
+  - name: STANDINGCANCELLED
+    description: ''
+  - name: STANDINGCANCELLEDBY
+    description: ''
+  - name: STANDINGDURATIONDAYS
+    description: ''
+  - name: STANDINGDURATIONMONTHS
+    description: ''
+  - name: STANDINGFREQUENCYDAYS
+    description: ''
+  - name: STANDINGFREQUENCYMONTHS
+    description: ''
+  - name: STANDINGORDERDOCUMENTID
+    description: ''
+  - name: STANDINGORDERFOREIGNID
+    description: ''
+  - name: STANDINGSTARTDATE
+    description: ''
+  - name: SUPERSEDEDDOCUMENTID
+    description: ''
+  - name: SUPERVISINGPROVIDERID
+    description: ''
+  - name: TIETOFOREIGNDOCUMENTNUMBER
+    description: ''
+  - name: CLINICALORDERTYPEID
+    description: ''
+  - name: LASTSUBMITTEDBY
+    description: ''
+  - name: LASTSUBMITTEDTIMESTAMP
+    description: ''
+  - name: LASTUPDATED
+    description: ''
