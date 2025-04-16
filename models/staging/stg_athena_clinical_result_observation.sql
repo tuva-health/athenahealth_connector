@@ -1,0 +1,45 @@
+
+select c.contextid
+     , c.contextname
+     , c.contextparentcontextid
+     , c.clinicalobservationid
+     , c.clinicalresultid
+     , c.loincid
+     , c.p4pcanonicalid
+     , c.observationvaluetype
+     , c.observationidentifier
+     , c.observationidentifiertext
+     , c.plcobservationidentifiertext
+     , c.observationidentifierloinc
+     , c.observationsubidentifier
+     , c.result
+     , c.plcobservationvalue
+     , c.observationnote
+     , c.plcobservationnote
+     , c.observationunits
+     , c.plcobservationunits
+     , c.referencerange
+     , c.plcreferencerange
+     , c.observationabnormalflagid
+     , c.plcobservationabnormalflagid
+     , c.probability
+     , c.abnormaltestnature
+     , c.resultstatus
+     , c.plcresultstatus
+     , c.observationtimestampdatetime
+     , c.ordering
+     , c.performinglabkey
+     , c.localclinicallabtemplatelistid
+     , c.localclinicallabtemplategridid
+     , c.versiontoken
+     , c.unitofmeasuremappingid
+     , c.templateanalytename
+     , c.createddatetime
+     , c.createdby
+     , c.lastmodifieddatetime
+     , c.lastmodifiedby
+     , c.deleteddatetime
+     , c.deletedby
+     , c.lastupdated
+from {{ source('athena','CLINICALRESULTOBSERVATION') }} as c
+where deletedby is null and deleteddatetime is null

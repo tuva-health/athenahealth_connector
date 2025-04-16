@@ -1,0 +1,130 @@
+version: 2
+models:
+- name: stg_athena_local_clinical_order_type
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - CLINICALORDERTYPEID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: CLINICALORDERTYPEID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: PARENTCLINICALORDERTYPEID
+    description: ''
+  - name: CLINICALORDERTYPEGROUPID
+    description: ''
+  - name: CLINICALORDERGENUSID
+    description: ''
+  - name: ORDERCODETYPE
+    description: ''
+  - name: ORDERCODE
+    description: ''
+  - name: DETAILORDERCODETYPE
+    description: ''
+  - name: DETAILORDERCODE
+    description: ''
+  - name: DETAILNAME
+    description: ''
+  - name: SUBCATEGORYNAME
+    description: ''
+  - name: NAME
+    description: ''
+  - name: PLCNAME
+    description: ''
+  - name: DESCRIPTION
+    description: ''
+  - name: DISPLAYQUANTITYUNITS
+    description: ''
+  - name: ORDERABLEFLAG
+    description: ''
+  - name: DEFAULTALARMDAYS
+    description: ''
+  - name: DEFAULTPRIORITY
+    description: ''
+  - name: ORDERING
+    description: ''
+  - name: ORDERTYPECLASS
+    description: ''
+  - name: INCOMINGDOCUMENTCLASS
+    description: ''
+  - name: PANELYN
+    description: ''
+  - name: COMPOUNDDEASCHEDULE
+    description: ''
+  - name: DISCONTINUEDDATETIME
+    description: ''
+    tests:
+    - dbt_expectations.expect_column_values_to_be_between:
+        tags: ['tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions']
+        min_value: '''1900-01-01'''
+        max_value: '''2100-01-01'''
+        strictly: false
+        config:
+          severity: warn
+  - name: REPLACEDBYID
+    description: ''
+  - name: LOINC
+    description: ''
+  - name: DOCUMENTSUBCLASS
+    description: ''
+  - name: FORPAINYN
+    description: ''
+  - name: DELETEDDATETIME
+    description: ''
+    tests:
+    - dbt_expectations.expect_column_values_to_be_between:
+        tags: ['tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions']
+        min_value: '''1900-01-01'''
+        max_value: '''2100-01-01'''
+        strictly: false
+        config:
+          severity: warn
+  - name: DELETEDBY
+    description: ''
+  - name: CREATEDDATETIME
+    description: ''
+    tests:
+    - dbt_expectations.expect_column_values_to_be_between:
+        tags: ['tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions']
+        min_value: '''1900-01-01'''
+        max_value: '''2100-01-01'''
+        strictly: false
+        config:
+          severity: warn
+  - name: CREATEDBY
+    description: ''
+  - name: LASTMODIFIEDDATETIME
+    description: ''
+    tests:
+    - dbt_expectations.expect_column_values_to_be_between:
+        tags: ['tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions']
+        min_value: '''1900-01-01'''
+        max_value: '''2100-01-01'''
+        strictly: false
+        config:
+          severity: warn
+  - name: LASTMODIFIEDBY
+    description: ''
+  - name: LASTUPDATED
+    description: ''

@@ -1,11 +1,10 @@
 {{ dbt_utils.union_relations(
-    relations=[ ref('condition_chart'),
-                ref('condition_claim'),
-                ref('condition_clinicalservice'),
-                ref('condition_document_diagnosis'),
-                ref('condition_encounter'),
-                ref('condition_patient_problem'),
-                ref('condition_patient_risk'),
-                ref('condition_patient_snomed_icd'),
-                ref('condition_patient_snomed_problem')]
+    relations=[ ref('int_athena_condition_chart'),
+                ref('int_athena_condition_claim'),
+                ref('int_athena_condition_clinicalservice'),
+                ref('int_athena_condition_document_diagnosis'),
+                ref('int_athena_condition_encounter'),
+                ref('int_athena_condition_patient_problem'),
+                ref('int_athena_condition_patient_snomed_icd'),
+                ref('int_athena_condition_patient_snomed_problem')]
 ) }}

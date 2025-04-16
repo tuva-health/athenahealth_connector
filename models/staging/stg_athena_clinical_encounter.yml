@@ -1,0 +1,158 @@
+version: 2
+models:
+- name: stg_athena_clinical_encounter
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - CLINICALENCOUNTERID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: CLINICALENCOUNTERID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: PATIENTID
+    description: ''
+  - name: CHARTID
+    description: ''
+  - name: APPOINTMENTID
+    description: ''
+  - name: APPOINTMENTTICKLERID
+    description: ''
+  - name: DEPARTMENTID
+    description: ''
+  - name: CLAIMID
+    description: ''
+  - name: CLINICALENCOUNTERTYPE
+    description: ''
+  - name: PROVIDERID
+    description: ''
+  - name: SUPERVISINGPROVIDERID
+    description: ''
+  - name: ENCOUNTERDATE
+    description: ''
+  - name: DOCUMENTEDBYSCRIBE
+    description: ''
+  - name: ENCOUNTERSTATUS
+    description: ''
+  - name: CREATEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREATEDBY
+    description: ''
+  - name: ASSIGNEDTO
+    description: ''
+  - name: CLINICALENCOUNTERLAYOUTID
+    description: ''
+  - name: CLINICALEPISODEID
+    description: ''
+  - name: LASTSAVETIMESTAMP
+    description: ''
+  - name: FLOWSHEETID
+    description: ''
+  - name: INPTCASEID
+    description: ''
+  - name: LASTMODIFIED
+    description: ''
+  - name: LASTREOPENED
+    description: ''
+  - name: PATIENTCASEID
+    description: ''
+  - name: PATIENTLOCATIONID
+    description: ''
+  - name: PATIENTSTATUSID
+    description: ''
+  - name: PREVIOUSLYCLOSEDBY
+    description: ''
+  - name: CLOSEATTEMPTEDYN
+    description: ''
+  - name: STREAMLINEDENCOUNTERLAYOUTID
+    description: ''
+  - name: INUNCONFIGUREDBUCKETYN
+    description: ''
+  - name: PREVIOUSLYCLOSED
+    description: ''
+  - name: ENCOUNTERDATETIMEUTC
+    description: ''
+  - name: CANCELREASONNOTE
+    description: ''
+  - name: STREAMLINEDTESTENCOUNTERYN
+    description: ''
+  - name: HASURGENTORDERSYN
+    description: ''
+  - name: LASTREOPENEDBY
+    description: ''
+  - name: CLOSEDBYDOCUMENTID
+    description: ''
+  - name: SCRIBEDBY
+    description: ''
+  - name: PERSISTENCEYN
+    description: ''
+  - name: INPTSTAYID
+    description: ''
+  - name: SPECIALTYID
+    description: ''
+  - name: SCRIBED
+    description: ''
+  - name: CLOSEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CLOSEDBY
+    description: ''
+  - name: DELETEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DELETEDBY
+    description: ''
+  - name: PATIENTSTATUS
+    description: ''
+  - name: PATIENTLOCATION
+    description: ''
+  - name: SPECIALTY
+    description: ''
+  - name: BILLINGTABREVIEWED
+    description: ''
+  - name: DOCUMENTEDBY
+    description: ''
+  - name: LASTUPDATED
+    description: ''

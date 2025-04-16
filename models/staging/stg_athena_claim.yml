@@ -1,0 +1,261 @@
+version: 2
+models:
+- name: stg_athena_claim
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - CLAIMID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: CLAIMID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: ORIGINALCLAIMID
+    description: ''
+  - name: PATIENTID
+    description: ''
+    tests:
+    - relationships:
+        to: ref('stg_athena_patient')
+        field: PATIENTID
+        tags: ['tuva_dqi_sev_3', 'dqi']
+        config:
+          severity: warn
+  - name: CLAIMPRIMARYPATIENTINSID
+    description: ''
+  - name: CLAIMSECONDARYPATIENTINSID
+    description: ''
+  - name: CLAIMSCHEDULINGPROVIDERID
+    description: ''
+  - name: RENDERINGPROVIDERID
+    description: ''
+  - name: SUPERVISINGPROVIDERID
+    description: ''
+  - name: CLAIMAPPOINTMENTID
+    description: ''
+  - name: PATIENTDEPARTMENTID
+    description: ''
+  - name: SERVICEDEPARTMENTID
+    description: ''
+  - name: CLAIMREFERRINGPROVIDERID
+    description: ''
+  - name: CLAIMREFERRALAUTHID
+    description: ''
+  - name: PATIENTROUNDINGLISTID
+    description: ''
+  - name: PRIMARYCLAIMSTATUS
+    description: ''
+  - name: SECONDARYCLAIMSTATUS
+    description: ''
+  - name: PATIENTCLAIMSTATUS
+    description: ''
+  - name: PRIMARYOUTSTANDING
+    description: ''
+  - name: SECONDARYOUTSTANDING
+    description: ''
+  - name: PATIENTOUTSTANDING
+    description: ''
+  - name: RELATEDTOEMPLOYMENTYN
+    description: ''
+  - name: RELATEDTOAUTOACCIDENTYN
+    description: ''
+  - name: MEDICAIDRESUBMISSIONCODE
+    description: ''
+  - name: PRIMARYCLAIMTYPE
+    description: ''
+  - name: SECONDARYCLAIMTYPE
+    description: ''
+  - name: CLAIMCREATEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREATEDBY
+    description: ''
+  - name: CLAIMSERVICEDATE
+    description: ''
+  - name: HOSPITALIZATIONFROMDATE
+    description: ''
+  - name: HOSPITALIZATIONTODATE
+    description: ''
+  - name: RESERVED19
+    description: ''
+  - name: PAYTOTAXID1
+    description: ''
+  - name: PAYTOTAXID2
+    description: ''
+  - name: LASTMODIFIED
+    description: ''
+  - name: LASTMODIFIEDBY
+    description: ''
+  - name: ACCEPTASSIGNMENTYN1
+    description: ''
+  - name: ACCEPTASSIGNMENTYN2
+    description: ''
+  - name: ACCIDENTDATE
+    description: ''
+  - name: ADDITIONALFREETEXT
+    description: ''
+  - name: ALTERNATIVEPAYMENTMODELID
+    description: ''
+  - name: ANOTHERPARTYRESPONSIBLEYN
+    description: ''
+  - name: ASSIGNMENTOFBENEFITSFLAG
+    description: ''
+  - name: AUTOACCIDENTSTATE
+    description: ''
+  - name: CLAIMALARMELIGIBLEYN
+    description: ''
+  - name: CLAIMBATCHID
+    description: ''
+  - name: CLAIMPATIENTINSURANCEPID
+    description: ''
+  - name: CLAIMSUBMISSIONCATEGORYID1
+    description: ''
+  - name: CLAIMSUBMISSIONCATEGORYID2
+    description: ''
+  - name: CLAIMTYPE
+    description: ''
+  - name: COVERAGESCANYN
+    description: ''
+  - name: CURRENTILLNESSDATE
+    description: ''
+  - name: DIAGNOSIS1
+    description: ''
+  - name: DIAGNOSIS2
+    description: ''
+  - name: DIAGNOSIS3
+    description: ''
+  - name: DIAGNOSIS4
+    description: ''
+  - name: DIAGNOSIS5
+    description: ''
+  - name: DIAGNOSIS6
+    description: ''
+  - name: DIAGNOSIS7
+    description: ''
+  - name: DIAGNOSIS8
+    description: ''
+  - name: EPAYMENTCONTRACTID
+    description: ''
+  - name: FROMUNABLETOWORKDATE
+    description: ''
+  - name: FULLYWORKEDREASONID1
+    description: ''
+  - name: FULLYWORKEDREASONID2
+    description: ''
+  - name: FULLYWORKEDREASONIDP
+    description: ''
+  - name: HEALTHCARECLAIMTYPEID1
+    description: ''
+  - name: HEALTHCARECLAIMTYPEID2
+    description: ''
+  - name: LASTACTION
+    description: ''
+  - name: LASTACTIONDATE
+    description: ''
+  - name: LASTBILLEDDATE1
+    description: ''
+  - name: LASTBILLEDDATE2
+    description: ''
+  - name: LASTBILLEDDATEP
+    description: ''
+  - name: LASTSCRUBDATE1
+    description: ''
+  - name: LASTSCRUBDATE2
+    description: ''
+  - name: LASTSCRUBDATEP
+    description: ''
+  - name: MANUALDROPREASONID
+    description: ''
+  - name: MANUALDROPREASONID2
+    description: ''
+  - name: MANUALDROPYN
+    description: ''
+  - name: MANUALDROPYN2
+    description: ''
+  - name: MEDICAIDRESUBMISSIONORIGREFNO
+    description: ''
+  - name: MSPINSURANCETYPEID
+    description: ''
+  - name: MSPINSURANCETYPESETYN
+    description: ''
+  - name: NODENIALMANAGEMENTYN
+    description: ''
+  - name: OTHERDIAGNOSES
+    description: ''
+  - name: PARENTCLAIMID
+    description: ''
+  - name: PAYTONPI1
+    description: ''
+  - name: PAYTONPI2
+    description: ''
+  - name: PHYSICIANSIGNATUREDATE
+    description: ''
+  - name: PQRIPARTICIPATION
+    description: ''
+  - name: PRIMARYBILLINGPROVIDERID
+    description: ''
+  - name: PRINTZERODOLLARCHARGESYN1
+    description: ''
+  - name: RELATEDTOOTHERACCIDENTYN
+    description: ''
+  - name: RELEASEOFINFORMATIONYN1
+    description: ''
+  - name: RESERVED10D
+    description: ''
+  - name: RETROMEDICAIDENROLLMENTYN
+    description: ''
+  - name: RTAELIGIBLEYN1
+    description: ''
+  - name: SIGNATURESOURCECODE
+    description: ''
+  - name: SIMILARILLNESSDATE
+    description: ''
+  - name: SLIDINGFEEPATIENTINSURANCEID
+    description: ''
+  - name: STATUS1CLAIMNOTEID
+    description: ''
+  - name: STATUS1LASTMODIFIED
+    description: ''
+  - name: STATUS2CLAIMNOTEID
+    description: ''
+  - name: STATUS2LASTMODIFIED
+    description: ''
+  - name: STATUSPCLAIMNOTEID
+    description: ''
+  - name: STATUSPLASTMODIFIED
+    description: ''
+  - name: TOUNABLETOWORKDATE
+    description: ''
+  - name: VISITBILLID
+    description: ''
+  - name: VISITGROUPID
+    description: ''
+  - name: LASTUPDATED
+    description: ''

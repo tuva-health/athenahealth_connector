@@ -1,0 +1,144 @@
+version: 2
+models:
+- name: stg_athena_clinical_result_observation
+  description: ''
+  tests:
+    - dbt_expectations.expect_table_row_count_to_be_between:
+        tags: [ 'tuva_dqi_sev_5', 'dqi' ]
+        description: "Expectation for there to be at least one record in this table."
+        min_value: 1
+        strictly: false
+        config:
+          severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: CLINICALOBSERVATIONID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CLINICALRESULTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+    - relationships:
+        to: ref('stg_athena_clinical_result')
+        field: CLINICALRESULTID
+        tags: ['tuva_dqi_sev_3', 'dqi']
+        config:
+          severity: warn
+  - name: LOINCID
+    description: ''
+  - name: P4PCANONICALID
+    description: ''
+  - name: OBSERVATIONVALUETYPE
+    description: ''
+  - name: OBSERVATIONIDENTIFIER
+    description: ''
+  - name: OBSERVATIONIDENTIFIERTEXT
+    description: ''
+  - name: PLCOBSERVATIONIDENTIFIERTEXT
+    description: ''
+  - name: OBSERVATIONIDENTIFIERLOINC
+    description: ''
+  - name: OBSERVATIONSUBIDENTIFIER
+    description: ''
+  - name: RESULT
+    description: ''
+  - name: PLCOBSERVATIONVALUE
+    description: ''
+  - name: OBSERVATIONNOTE
+    description: ''
+  - name: PLCOBSERVATIONNOTE
+    description: ''
+  - name: OBSERVATIONUNITS
+    description: ''
+  - name: PLCOBSERVATIONUNITS
+    description: ''
+  - name: REFERENCERANGE
+    description: ''
+  - name: PLCREFERENCERANGE
+    description: ''
+  - name: OBSERVATIONABNORMALFLAGID
+    description: ''
+  - name: PLCOBSERVATIONABNORMALFLAGID
+    description: ''
+  - name: PROBABILITY
+    description: ''
+  - name: ABNORMALTESTNATURE
+    description: ''
+  - name: RESULTSTATUS
+    description: ''
+  - name: PLCRESULTSTATUS
+    description: ''
+  - name: OBSERVATIONTIMESTAMPDATETIME
+    description: ''
+    tests:
+    - dbt_expectations.expect_column_values_to_be_between:
+        tags: ['tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions']
+        min_value: '''1900-01-01'''
+        max_value: '''2100-01-01'''
+        strictly: false
+        config:
+          severity: warn
+  - name: ORDERING
+    description: ''
+  - name: PERFORMINGLABKEY
+    description: ''
+  - name: LOCALCLINICALLABTEMPLATELISTID
+    description: ''
+  - name: LOCALCLINICALLABTEMPLATEGRIDID
+    description: ''
+  - name: VERSIONTOKEN
+    description: ''
+  - name: UNITOFMEASUREMAPPINGID
+    description: ''
+  - name: TEMPLATEANALYTENAME
+    description: ''
+  - name: CREATEDDATETIME
+    description: ''
+    tests:
+    - dbt_expectations.expect_column_values_to_be_between:
+        tags: ['tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions']
+        min_value: '''1900-01-01'''
+        max_value: '''2100-01-01'''
+        strictly: false
+        config:
+          severity: warn
+  - name: CREATEDBY
+    description: ''
+  - name: LASTMODIFIEDDATETIME
+    description: ''
+    tests:
+    - dbt_expectations.expect_column_values_to_be_between:
+        tags: ['tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions']
+        min_value: '''1900-01-01'''
+        max_value: '''2100-01-01'''
+        strictly: false
+        config:
+          severity: warn
+  - name: LASTMODIFIEDBY
+    description: ''
+  - name: DELETEDDATETIME
+    description: ''
+    tests:
+    - dbt_expectations.expect_column_values_to_be_between:
+        tags: ['tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions']
+        min_value: '''1900-01-01'''
+        max_value: '''2100-01-01'''
+        strictly: false
+        config:
+          severity: warn
+  - name: DELETEDBY
+    description: ''
+  - name: LASTUPDATED
+    description: ''

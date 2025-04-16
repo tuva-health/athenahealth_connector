@@ -1,0 +1,59 @@
+
+select c.contextid
+     , c.contextname
+     , c.contextparentcontextid
+     , c.clinicalencounterid
+     , c.patientid
+     , c.chartid
+     , c.appointmentid
+     , c.appointmentticklerid
+     , c.departmentid
+     , c.claimid
+     , c.clinicalencountertype
+     , c.providerid
+     , c.supervisingproviderid
+     , c.encounterdate
+     , c.documentedbyscribe
+     , c.encounterstatus
+     , c.createddatetime
+     , c.createdby
+     , c.assignedto
+     , c.clinicalencounterlayoutid
+     , c.clinicalepisodeid
+     , c.lastsavetimestamp
+     , c.flowsheetid
+     , c.inptcaseid
+     , c.lastmodified
+     , c.lastreopened
+     , c.patientcaseid
+     , c.patientlocationid
+     , c.patientstatusid
+     , c.previouslyclosedby
+     , c.closeattemptedyn
+     , c.streamlinedencounterlayoutid
+     , c.inunconfiguredbucketyn
+     , c.previouslyclosed
+     , c.encounterdatetimeutc
+     , c.cancelreasonnote
+     , c.streamlinedtestencounteryn
+     , c.hasurgentordersyn
+     , c.lastreopenedby
+     , c.closedbydocumentid
+     , c.scribedby
+     , c.persistenceyn
+     , c.inptstayid
+     , c.specialtyid
+     , c.scribed
+     , c.closeddatetime
+     , c.closedby
+     , c.deleteddatetime
+     , c.deletedby
+     , c.patientstatus
+     , c.patientlocation
+     , c.specialty
+     , c.billingtabreviewed
+     , c.documentedby
+     , c.lastupdated
+
+from {{ source('athena','CLINICALENCOUNTER') }} as c
+where c.deleteddatetime is null and c.deletedby is null

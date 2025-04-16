@@ -1,0 +1,58 @@
+version: 2
+models:
+- name: stg_athena_icd_code_all
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - ICDCODEID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: ICDCODEID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: DIAGNOSISCODE
+    description: ''
+  - name: DIAGNOSISCODEDESCRIPTION
+    description: ''
+  - name: PARENTDIAGNOSISCODE
+    description: ''
+  - name: DIAGNOSISCODESET
+    description: ''
+  - name: CODECLASS
+    description: ''
+  - name: DIAGNOSISCODEGROUP
+    description: ''
+  - name: SUBCATEGORY
+    description: ''
+  - name: EFFECTIVEDATE
+    description: ''
+  - name: EXPIRATIONDATE
+    description: ''
+  - name: UNSTRIPPEDDIAGNOSISCODE
+    description: ''
+  - name: LASTUPDATED
+    description: ''
+  - name: DIAGNOSISCODESETID
+    description: ''
+  - name: ISDELETED
+    description: ''

@@ -15,7 +15,14 @@ vars:
   ## sets tuva to the correct model build types
   clinical_enabled: true
 
-
+models:
+  athena_connector:
+    staging:
+      +materialized: view
+      +schema: athena_staging
+    intermediate:
+      +materialized: table
+      +schema: athena_intermediate
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
@@ -29,10 +36,6 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
-
 dispatch:
   - macro_namespace: 'dbt'
     search_order: ['the_tuva_project', 'dbt']
-
-
-

@@ -1,0 +1,100 @@
+version: 2
+models:
+- name: int_athena_condition_patient_problem
+  description: ''
+  tests:
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONDITION_ID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+    - unique:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: PERSON_ID
+    description: ''
+  - name: PATIENT_ID
+    description: ''
+  - name: ENCOUNTER_ID
+    description: ''
+  - name: CLAIM_ID
+    description: ''
+  - name: RECORDED_DATE
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: ONSET_DATE
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: RESOLVED_DATE
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: STATUS
+    description: ''
+  - name: CONDITION_TYPE
+    description: ''
+  - name: SOURCE_CODE_TYPE
+    description: ''
+  - name: SOURCE_CODE
+    description: ''
+  - name: SOURCE_DESCRIPTION
+    description: ''
+  - name: NORMALIZED_CODE_TYPE
+    description: ''
+  - name: NORMALIZED_CODE
+    description: ''
+  - name: NORMALIZED_DESCRIPTION
+    description: ''
+  - name: CONDITION_RANK
+    description: ''
+    tests:
+    - dbt_expectations.expect_column_values_to_be_between:
+        tags: ['tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions']
+        min_value: 1
+        strictly: false # (Optional. Default is 'false'. Adds an 'or equal to' to the comparison operator for min/max)
+        config:
+          severity: warn
+  - name: PRESENT_ON_ADMIT_CODE
+    description: ''
+  - name: PRESENT_ON_ADMIT_DESCRIPTION
+    description: ''
+  - name: DATA_SOURCE
+    description: ''
+  - name: FILE_NAME
+    description: ''
+  - name: INGEST_DATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn

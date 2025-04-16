@@ -1,0 +1,37 @@
+version: 2
+models:
+- name: enhanced_procedure_code
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - PROCEDURECODE
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: PROCEDURECODE
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: PROCEDURECODEDESCRIPTION
+    description: ''
+  - name: SOURCE_CODE_TYPE
+    description: ''
+  - name: ROOT_CPT
+    description: ''
+  - name: MOD1
+    description: ''
+  - name: MOD2
+    description: ''
+  - name: MOD3
+    description: ''
+  - name: MOD4
+    description: ''
+  - name: MOD5
+    description: ''

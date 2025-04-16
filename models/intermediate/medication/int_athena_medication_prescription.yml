@@ -1,0 +1,82 @@
+version: 2
+models:
+- name: int_athena_medication_prescription
+  description: ''
+  columns:
+  - name: MEDICATION_ID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+    - unique:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: PERSON_ID
+    description: ''
+  - name: PATIENT_ID
+    description: ''
+  - name: ENCOUNTER_ID
+    description: ''
+  - name: DISPENSING_DATE
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: PRESCRIBING_DATE
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: SOURCE_CODE_TYPE
+    description: ''
+  - name: SOURCE_CODE
+    description: ''
+  - name: SOURCE_DESCRIPTION
+    description: ''
+  - name: NDC_CODE
+    description: ''
+  - name: NDC_DESCRIPTION
+    description: ''
+  - name: RXNORM_CODE
+    description: ''
+  - name: RXNORM_DESCRIPTION
+    description: ''
+  - name: ATC_CODE
+    description: ''
+  - name: ATC_DESCRIPTION
+    description: ''
+  - name: ROUTE
+    description: ''
+  - name: STRENGTH
+    description: ''
+  - name: QUANTITY
+    description: ''
+  - name: QUANTITY_UNIT
+    description: ''
+  - name: DAYS_SUPPLY
+    description: ''
+  - name: PRACTITIONER_ID
+    description: ''
+  - name: DATA_SOURCE
+    description: ''
+  - name: FILE_NAME
+    description: ''
+  - name: INGEST_DATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_3', 'dqi', 'dqi_cms_chronic_conditions', 'dqi_tuva_chronic_conditions' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn

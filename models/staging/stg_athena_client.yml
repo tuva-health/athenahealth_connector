@@ -1,0 +1,766 @@
+version: 2
+models:
+- name: stg_athena_client
+  description: ''
+  tests:
+  - dbt_utils.unique_combination_of_columns:
+      tags: ['tuva_dqi_sev_1', 'dqi']
+      combination_of_columns:
+      - CONTEXTID
+      - CLIENTID
+  - dbt_expectations.expect_table_row_count_to_be_between:
+      tags: ['tuva_dqi_sev_5', 'dqi']
+      description: "Expectation for there to be at least one record in this table."
+      min_value: 1
+      strictly: false
+      config:
+        severity: warn
+  columns:
+  - name: CONTEXTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CONTEXTNAME
+    description: ''
+  - name: CONTEXTPARENTCONTEXTID
+    description: ''
+  - name: CLIENTID
+    description: ''
+    tests:
+    - not_null:
+        tags: ['tuva_dqi_sev_1', 'dqi']
+  - name: CREATEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREATEDBY
+    description: ''
+  - name: LASTNAME
+    description: ''
+  - name: PLCLASTNAME
+    description: ''
+  - name: FIRSTNAME
+    description: ''
+  - name: PLCFIRSTNAME
+    description: ''
+  - name: MIDDLEINITIAL
+    description: ''
+  - name: PLCMIDDLEINITIAL
+    description: ''
+  - name: PREVIOUSLASTNAME
+    description: ''
+  - name: PLCPREVIOUSLASTNAME
+    description: ''
+  - name: MOTHERSMAIDENNAME
+    description: ''
+  - name: NAMESUFFIX
+    description: ''
+  - name: PLCNAMESUFFIX
+    description: ''
+  - name: PREFERREDNAME
+    description: ''
+  - name: PLCPREFERREDNAME
+    description: ''
+  - name: REGISTRATIONDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: ADDRESS1
+    description: ''
+  - name: PLCADDRESS1
+    description: ''
+  - name: ADDRESS2
+    description: ''
+  - name: PLCADDRESS2
+    description: ''
+  - name: CITY
+    description: ''
+  - name: PLCCITY
+    description: ''
+  - name: STATE
+    description: ''
+  - name: ZIP
+    description: ''
+  - name: HOMEPHONE
+    description: ''
+  - name: TRANSLATEDHOMEPHONEINDEX
+    description: ''
+  - name: WORKPHONE
+    description: ''
+  - name: TRANSLATEDWORKPHONEINDEX
+    description: ''
+  - name: OTHERPHONETYPE
+    description: ''
+  - name: OTHERPHONE
+    description: ''
+  - name: DOBDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: SSN
+    description: ''
+  - name: SEX
+    description: ''
+  - name: SEXUNKNOWNYN
+    description: ''
+  - name: REGISTRATIONDEPARTMENTID
+    description: ''
+  - name: CURRENTDEPARTMENTID
+    description: ''
+  - name: PRIMARYPROVIDERID
+    description: ''
+  - name: MARITALSTATUSID
+    description: ''
+  - name: STUDENTSTATUSID
+    description: ''
+  - name: EMPLOYMENTSTATUSID
+    description: ''
+  - name: DECEASEDDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: EMPLOYERNAME
+    description: ''
+  - name: EDUCATIONLEVELID
+    description: ''
+  - name: REFERRALSOURCEID
+    description: ''
+  - name: REFERRALSOURCEOTHER
+    description: ''
+  - name: ETHNICITYID
+    description: ''
+  - name: RACEID
+    description: ''
+  - name: PRIMARYLANGUAGEID
+    description: ''
+  - name: PRIMARYLANGUAGEOTHER
+    description: ''
+  - name: TRANSFERDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: STATUS
+    description: ''
+  - name: NOTES
+    description: ''
+  - name: CONTACTNAME
+    description: ''
+  - name: CONTACTNAME2
+    description: ''
+  - name: CONTACTRELATIONSHIP
+    description: ''
+  - name: CONTACTPHONE1
+    description: ''
+  - name: CONTACTPHONE2
+    description: ''
+  - name: NEXTKINNAME
+    description: ''
+  - name: NEXTKINRELATIONSHIP
+    description: ''
+  - name: NEXTKINPHONE
+    description: ''
+  - name: RPFIRSTNAME
+    description: ''
+  - name: RPLASTNAME
+    description: ''
+  - name: RPMIDDLEINITIAL
+    description: ''
+  - name: RPDOBDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: GUARDIANFIRSTNAME
+    description: ''
+  - name: GUARDIANLASTNAME
+    description: ''
+  - name: GUARDIANMIDDLEINITIAL
+    description: ''
+  - name: REFERRINGPROVIDERID
+    description: ''
+  - name: EMAIL
+    description: ''
+  - name: DIRECTEMAIL
+    description: ''
+  - name: EMAILEXISTSYN
+    description: ''
+  - name: EMAILCONFIRMEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: LASTEMAIL
+    description: ''
+  - name: SUPPRESSSTATEMENT
+    description: ''
+  - name: ONLINESTATEMENTONLYYN
+    description: ''
+  - name: ONLINESTATEMENTONLYDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: NEXTSTATEMENTDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: STATEMENTNOTE
+    description: ''
+  - name: BALANCEFORWARDAMOUNT
+    description: ''
+  - name: UNAPPLIEDAMOUNT
+    description: ''
+  - name: EMPLOYERCITY
+    description: ''
+  - name: EMPLOYERADDRESS
+    description: ''
+  - name: EMPLOYERSTATE
+    description: ''
+  - name: EMPLOYERZIP
+    description: ''
+  - name: EMPLOYERCOUNTRYID
+    description: ''
+  - name: EMPLOYERPHONE
+    description: ''
+  - name: OCCUPATIONID
+    description: ''
+  - name: OCCUPATION
+    description: ''
+  - name: INDUSTRYID
+    description: ''
+  - name: INDUSTRY
+    description: ''
+  - name: DIAGNOSIS1
+    description: ''
+  - name: DIAGNOSIS2
+    description: ''
+  - name: DIAGNOSIS3
+    description: ''
+  - name: LASTMODIFIEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: LASTMODIFIEDBY
+    description: ''
+  - name: FIRSTVISITDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CREDITBALANCE
+    description: ''
+  - name: NEWPATIENTID
+    description: ''
+  - name: OUTSTANDINGP
+    description: ''
+  - name: CLAIMSTATUSP
+    description: ''
+  - name: HOLDSTATEMENTREASON
+    description: ''
+  - name: OTHERRECORDNUMBER
+    description: ''
+  - name: OVERDUEDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: FAMILYCLIENTID
+    description: ''
+  - name: IDOVERRIDDENYN
+    description: ''
+  - name: IMPORTUNIQUEID
+    description: ''
+  - name: IMPORTCOL1
+    description: ''
+  - name: IMPORTCOL2
+    description: ''
+  - name: EMPLOYERID
+    description: ''
+  - name: ENTERPRISEID
+    description: ''
+  - name: RPADDRESS
+    description: ''
+  - name: RPCITY
+    description: ''
+  - name: RPSTATE
+    description: ''
+  - name: RPZIP
+    description: ''
+  - name: ORIGINALPRACTICEID
+    description: ''
+  - name: CHARTHOME
+    description: ''
+  - name: CHARTLOCATION
+    description: ''
+  - name: CHARTHOLDER
+    description: ''
+  - name: COUNTRYID
+    description: ''
+  - name: RPCOUNTRYID
+    description: ''
+  - name: PRIVACYNOTICEGIVENFLAG
+    description: ''
+  - name: PRIVACYNOTICEGIVENDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: PRIVACYNOTICENOTGIVENREASON
+    description: ''
+  - name: PRIVACYNOTICENOTGIVENNOTE
+    description: ''
+  - name: PRIVACYNOTICEGIVENDEPARTMENTID
+    description: ''
+  - name: PRIVACYNOTICEGIVENBY
+    description: ''
+  - name: PATIENTSIGNATUREONFILEFLAG
+    description: ''
+  - name: PATIENTSIGNATUREEFFECTIVEDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: PATIENTSIGNATUREEXPIRATIONDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: INSUREDSIGNATUREONFILEFLAG
+    description: ''
+  - name: INSUREDSIGNATUREEFFECTIVEDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: INSUREDSIGNATUREEXPIRATIONDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CONSENTTOCALLFLAG
+    description: ''
+  - name: CONSENTTOCALLFLAGEFFECTIVEDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: SELFPAYRESTRICTIONYN
+    description: ''
+  - name: SIGNATURESOURCECODE
+    description: ''
+  - name: RESTRICTRECORDYN
+    description: ''
+  - name: CONFIDENTIALCOMMUNICATIONYN
+    description: ''
+  - name: BLOCKPATIENTYN
+    description: ''
+  - name: RESTRICTREPORTINGYN
+    description: ''
+  - name: MEDICATIONHISTORYCONSENTBY
+    description: ''
+  - name: MEDICATIONHISTORYCONSENTDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: MEDICATIONHISTORYCONSENTYN
+    description: ''
+  - name: PROVIDERGROUPID
+    description: ''
+  - name: HIPAAID
+    description: ''
+  - name: HOMEBOUNDYN
+    description: ''
+  - name: RPNAMESUFFIX
+    description: ''
+  - name: RPADDRESS2
+    description: ''
+  - name: GUARDIANNAMESUFFIX
+    description: ''
+  - name: MOBILEPHONE
+    description: ''
+  - name: HASMOBILEYN
+    description: ''
+  - name: TRANSLATEDMOBILEPHONEINDEX
+    description: ''
+  - name: MOBILECARRIERID
+    description: ''
+  - name: RPSSN
+    description: ''
+  - name: RPPHONE
+    description: ''
+  - name: RPEMPLOYERID
+    description: ''
+  - name: SAMEADDRESSFLAG
+    description: ''
+  - name: RELATIONSHIPTOPATIENTID
+    description: ''
+  - name: STATEMENTNOTEEFFECTIVEDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: STATEMENTNOTEEXPIRATIONDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: DEFAULTPRESCRIPTIONPROVIDERID
+    description: ''
+  - name: DEFAULTLABPROVIDERID
+    description: ''
+  - name: DEFAULTIMAGINGPROVIDERID
+    description: ''
+  - name: LICENSENUMBER
+    description: ''
+  - name: LICENSESTATEID
+    description: ''
+  - name: LICENSEEXPIRATIONDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: PINCODE
+    description: ''
+  - name: ENCRYPTEDPINCODE
+    description: ''
+  - name: ENCRYPTEDPINCODESALT
+    description: ''
+  - name: DONOTCALLYN
+    description: ''
+  - name: NOPORTALYN
+    description: ''
+  - name: NOPORTALADOPTIONEMAILYN
+    description: ''
+  - name: PORTALACCESSYN
+    description: ''
+  - name: PORTALACCESSPROVIDEDDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: PORTALTERMSONFILEFLAG
+    description: ''
+  - name: PORTALTERMSEFFECTIVEDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: PORTALTERMSEXPIRATIONDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: PORTALREGISTRATIONDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: QUICKPAYTERMSONFILEFLAG
+    description: ''
+  - name: QUICKPAYTERMSEFFECTIVEDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: QUICKPAYTERMSEXPIRATIONDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: SMSOPTINDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: SMSPROMPTEDDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: CONSENTTOTEXTYN
+    description: ''
+  - name: CONTACTPREFERENCE
+    description: ''
+  - name: HIESUBMISSIONYN
+    description: ''
+  - name: HIESUBMISSIONDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: HIESUBMISSIONBY
+    description: ''
+  - name: HIERETRIEVALYN
+    description: ''
+  - name: HIERETRIEVALDATEDATETIME
+    description: ''
+    tests:
+      - dbt_expectations.expect_column_values_to_be_between:
+          tags: [ 'tuva_dqi_sev_4', 'dqi' ]
+          min_value: '''1900-01-01'''
+          max_value: '''2100-01-01'''
+          strictly: false
+          config:
+            severity: warn
+  - name: HIERETRIEVALBY
+    description: ''
+  - name: RPEMAIL
+    description: ''
+  - name: FAMILYSIZE
+    description: ''
+  - name: UNCONFIRMEDFAMILYSIZE
+    description: ''
+  - name: UNCONFFAMILYSIZEDECLINEDYN
+    description: ''
+  - name: YEARLYINCOME
+    description: ''
+  - name: UNCONFIRMEDYEARLYINCOME
+    description: ''
+  - name: INCOMEPERPAYPERIOD
+    description: ''
+  - name: UNCONFIRMEDINCOMEPERPAYPERIOD
+    description: ''
+  - name: PAYPERIOD
+    description: ''
+  - name: UNCONFIRMEDPAYPERIOD
+    description: ''
+  - name: UNCONFIRMEDINCOMEDECLINEDYN
+    description: ''
+  - name: UNCONFIRMEDFEDERALPOVERTYLEVEL
+    description: ''
+  - name: AGRIWORKER
+    description: ''
+  - name: AGRIWORKERTYPES
+    description: ''
+  - name: HOMELESS
+    description: ''
+  - name: HOMELESSTYPES
+    description: ''
+  - name: VETERANSTATUS
+    description: ''
+  - name: SCHOOLBASED
+    description: ''
+  - name: PUBLICHOUSING
+    description: ''
+  - name: RPEMAILEXISTSYN
+    description: ''
+  - name: SHOWNEWFEATUREPORTALYN
+    description: ''
+  - name: PHONEMESSAGEOKYN
+    description: ''
+  - name: CONTACTTIMEID
+    description: ''
+  - name: DIRECTORYYN
+    description: ''
+  - name: ORGANDONORYN
+    description: ''
+  - name: ALTCONTACTNAME
+    description: ''
+  - name: ALTCONTACTPHONE
+    description: ''
+  - name: RELIGIONID
+    description: ''
+  - name: CHURCH
+    description: ''
+  - name: CARESUMMARYDELIVERYPREFERENCE
+    description: ''
+  - name: TESTPATIENTYN
+    description: ''
+  - name: STREAMLINEDTESTPATIENTYN
+    description: ''
+  - name: STREAMLINEDTESTUSERNAME
+    description: ''
+  - name: UNCONFINCOMERANGEDECLINEDYN
+    description: ''
+  - name: SEXUALORIENTATION
+    description: ''
+  - name: SEXUALORIENTATIONOTHER
+    description: ''
+  - name: SEXUALORIENTATIONID
+    description: ''
+  - name: GENDERIDENTITY
+    description: ''
+  - name: GENDERIDENTITYOTHER
+    description: ''
+  - name: GENDERIDENTITYID
+    description: ''
+  - name: ALTFIRSTNAME
+    description: ''
+  - name: PLCALTFIRSTNAME
+    description: ''
+  - name: PREFERREDPRONOUNS
+    description: ''
+  - name: ASSIGNEDSEXATBIRTH
+    description: ''
+  - name: NORPFIRSTNAMEYN
+    description: ''
+  - name: NORPLASTNAMEYN
+    description: ''
+  - name: JOHNDOEYN
+    description: ''
+  - name: LASTUPDATED
+    description: ''

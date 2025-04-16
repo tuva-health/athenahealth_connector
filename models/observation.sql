@@ -1,4 +1,4 @@
 {{ dbt_utils.union_relations(
-    relations=[ ref('observation_vital'),
-                ref('observation_clinical_result')]
+    relations=[ ref('int_athena_observation_vital'),
+                ref('int_athena_observation_clinical_result')]
 ) }}

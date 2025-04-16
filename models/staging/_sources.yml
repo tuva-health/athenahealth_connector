@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: athena
+    database: ATHENAHEALTH
+    schema: ATHENAONE
+    tables:
+      - name: CHART
+      - name: CHARTSNOMEDICD
+      - name: CHARTSNOMEDICDEVENT
+      - name: CLAIM
+      - name: CLAIMDIAGNOSIS
+      - name: CLIENT
+      - name: CLINICALENCOUNTER
+      - name: CLINICALENCOUNTERDIAGNOSIS
+      - name: CLINICALENCOUNTERDXICD10
+      - name: CLINICALORDERTYPE
+      - name: CLINICALPRESCRIPTION
+      - name: CLINICALPROVIDER
+      - name: CLINICALRESULTOBSERVATION
+      - name: CLINICALRESULT
+      - name: CLINICALSERVICE
+      - name: CLINICALSERVICEDIAGNOSIS
+      - name: CLINICALSERVICEPROCEDURECODE
+      - name: DEPARTMENT
+      - name: DOCUMENTDIAGNOSIS
+      - name: DOCUMENT
+      - name: ICDCODEALL
+      - name: LOCALCLINICALLABTEMPLATELIST
+      - name: LOCALCLINICALLABTEMPLATE
+      - name: LOINC
+      - name: MEDICATION
+      - name: ORDERAUTHCPT
+      - name: ORDERAUTH
+      - name: PATIENT
+      - name: PATIENTMEDICATION
+      - name: PATIENTPROBLEM
+      - name: PATIENTRACE
+      - name: PATIENTRISKCONDITION
+      - name: PATIENTSNOMEDICD10
+      - name: PATIENTSNOMEDPROBLEM
+      - name: RISKCONDITIONSTATENAME
+      - name: PROCEDURECODE
+      - name: PROVIDER
+      - name: VISIT
+      - name: VISITCHARGE
+      - name: VITAL
+      - name: VITALSIGN
+      - name: VITALATTRIBUTE
