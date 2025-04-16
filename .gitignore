@@ -1,0 +1,28 @@
+# Compiled files and build outputs
+target/
+
+# DBT specific
+dbt_modules/
+dbt_packages/
+package-lock.yml
+
+# Logs
+logs/
+
+# Documentation
+release_notes/
+
+# IDE and editor files
+.idea/
+.vscode/
+
+# Operating system files
+.DS_Store
+
+# Environment and dependency management
+.mise.toml
+.venv/
+venv/
+__pycache__/
+.envrc
+.python-version

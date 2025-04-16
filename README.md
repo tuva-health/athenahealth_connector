@@ -1,39 +1,28 @@
+[![Apache License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![dbt logo and version](https://img.shields.io/static/v1?logo=dbt&label=dbt-version&message=1.x&color=orange)
+
 # Athena EMR dbt Connector
 
-![dbt logo and version](https://img.shields.io/static/v1?logo=dbt&label=dbt-version&message=1.9.X&color=orange)
+## 🔗 Docs
+Check out our [docs](https://thetuvaproject.com/) to learn about the project and how you can use it.
+<br/><br/>
 
-**Welcome!** This project is designed specifically for you to transform your raw Athena Electronic Medical Record (EMR) 
-data into a structured, analytics-ready format using the power of dbt and the Tuva Project's healthcare data models.
+## 🧰 What does this repo do?
 
----
+**Welcome!** The Athenahealth Connector is a dbt project that maps raw Athena Electronic Medical Record (EMR) to the Tuva Input Layer, which is the first step in running The Tuva Project. Ultimately, this connector will help you transform your data into a structured, analytics-ready format using the power of dbt and the Tuva Project's healthcare data models.
 
-## ❓ What is This?
-
-Think of this project as a specialized pipeline:
-
-1.  **Input:** Raw data from your specific Athena EMR instance, located in your Snowflake data warehouse.
+We can think of this project as a specialized pipeline:
+1.  **Input:** Raw data from your specific Athena EMR instance, located in your  data warehouse.
 2.  **Process:** Uses **dbt (data build tool)** to clean, transform, and model this raw data. dbt allows us to write data transformations as simple SQL `SELECT` statements and handles the complexities of dependency management, testing, and documentation.
 3.  **Framework:** Leverages **The Tuva Project**, an open-source project providing standardized data models specifically for healthcare data. This ensures your data is structured consistently and compatibly with best practices.
-4.  **Output:** Creates well-defined tables (data marts) in your Snowflake warehouse, ready for analysis, reporting, and downstream use. These tables follow the Tuva Project's clinical data model structure.
+4.  **Output:** Creates well-defined tables (data marts) in your data warehouse, ready for analysis, reporting, and downstream use. These tables follow the Tuva Project's clinical data model structure.
 
-**Key Technologies:**
-
-* **dbt:** The core transformation engine. You'll interact with it via command-line commands (`dbt run`, `dbt test`, etc.).
-* **The Tuva Project:** Provides the target data model schemas and helpful macros (reusable code snippets) for healthcare data transformation. This project depends on the `tuva-health/the_tuva_project` dbt package.
-* **Snowflake:** Your data warehouse where the raw data resides and the final transformed data will be stored.
-
----
-
-## Goals of this Project
-
-* Map raw data tables from your Athena EMR system into the standardized Tuva Project data models.
-* Build the core Tuva clinical data marts based on your data.
-* Provide a repeatable, testable, and documented process for transforming your healthcare data.
+## 🔌 Database Support
+- Snowflake
+- BigQuery
+<br/><br/>
 
 ---
-
-## What's Included?
-
+## Project Structure
 * **dbt Models:** SQL files (`.sql`) in the `models/` directory that define the transformations from raw Athena data to staging, intermediate, and final Tuva Mart tables.
     * `models/staging`: Basic cleaning and renaming of raw Athena tables (materialized as views in the `athena_staging` schema).
     * `models/intermediate`: More complex joins and logic to prepare data for the final marts (materialized as tables in the `athena_intermediate` schema).
@@ -41,24 +30,22 @@ Think of this project as a specialized pipeline:
 * **Configuration Files:**
     * `dbt_project.yml`: Main configuration for this dbt project (name, version, model paths, schema configurations, variables).
     * `packages.yml`: Declares the external dbt packages needed (The Tuva Project, dbt_utils).
-    * `sources.yml` (Located in `models/staging/`): You will configure this to tell dbt where your raw Athena data lives in Snowflake.
+    * `sources.yml` (Located in `models/staging/`): You will configure this to tell dbt where your raw Athena data lives in your data warehouse.
 * **Tests:** Data quality tests (`.yml` files) to help ensure the transformations are working correctly. This also checks the quality on input data. 
 
 ---
 
-## ✅ Getting Started: Setup Guide
-
-Follow these steps to set up and run the project:
+## ✅ Quickstart Guide
 
 ### **Step 1: Prerequisites**
 
 Before you begin, ensure you have the following:
 
-1.  **Access to Snowflake:** Credentials (`user`, `role`, `warehouse`) and network access to your Snowflake instance.
-2.  **Athena EMR Data:** Your raw Athena data must be loaded into specific tables within a database/schema in your Snowflake instance.
-3.  **dbt CLI Installed:** You need dbt (version 1.9 recommended) installed on your machine or environment where you'll run the transformations. See [dbt Installation Guide](https://docs.getdbt.com/docs/installation).
+1.  **Access to your data warehouse:** Credentials and network access to your data warehouse instance (e.g. Snowflake, BigQuery).
+2.  **Athena EMR Data:** Your raw Athena data must be loaded into specific tables within your data warehouse.
+3.  **dbt CLI Installed:** You need dbt (version 1.9 recommended) installed on your machine or environment where you'll run the transformations. See [dbt Installation Guide](https://docs.getdbt.com/docs/installation) for help with installation.
 4.  **Git:** You need Git installed to clone this project repository.
-5.  **JWT Authentication Details:**
+5.  **Authentication Details:** (A Snowflake-specific example follows)
     * Your Snowflake `account` identifier.
     * Your Snowflake `user` designated for dbt.
     * The `private_key.pem` file provided for JWT authentication.
@@ -77,7 +64,7 @@ cd athenahealth_connector
 
 It's highly recommended to use a Python virtual environment to manage project dependencies. This isolates the project's packages from your global Python installation.
 
-1. Create the virtual environment (run this inside the tuva_dbt directory):
+1. Create the virtual environment (run this inside the athenahealth_connector directory):
 
 ```bash
 # Use python3 if python defaults to Python 2
@@ -99,18 +86,14 @@ You should see (venv) prepended to your command prompt, indicating the environme
 
 ## **Step 4: Install Python Dependencies** 
 
-With the virtual environment active, install the required Python packages, including dbt:
-```bash
-pip install -r requirements-dev.txt
-```
-This command reads the requirements-dev.txt file and installs the specified versions of dbt-core, dbt-snowflake, and any other necessary libraries into your virtual environment.
+With the virtual environment active, install the required Python packages, including dbt and the warehouse-specific dbt adapter (e.g. `dbt-snowflake`, `dbt-bigquery`).
 
-### **Step 5: Configure profiles.yml for Snowflake Connection**
+### **Step 5: Configure profiles.yml for Data Warehouse Connection**
 
-dbt needs to know how to connect to your Snowflake warehouse. This is done via a profiles.yml file, which you need to create. This file should NOT be committed to Git, as it contains sensitive credentials.
+dbt needs to know how to connect to your data warehouse. In general, this is done via a profiles.yml file, which you need to create. This file should NOT be committed to Git, as it contains sensitive credentials.
 
 * **Location:** By default, dbt looks for this file in ~/.dbt/profiles.yml (your user home directory, in a hidden .dbt folder).
-* **Content:** Create the file with the following structure, replacing placeholders with your specific details:
+* **Content:** For a Snowflake-specific JWT token example, you would create the file with the following structure, replacing placeholders with your specific details. For other connection and data warehouse types, the specific structure of the profiles.yml may differ. For more information, see the [dbt docs](https://docs.getdbt.com/docs/core/connect-data-platform/profiles.yml).
 
 ```YAML
 
@@ -176,7 +159,7 @@ Once setup is complete, you can run the dbt transformations:
 Full Run (Recommended First Time), this command will:
 * Run all models (.sql files in models/).
 * Run all tests (.yml, .sql files in tests/).
-* Materialize tables/views in your target Snowflake database/schema as configured.
+* Materialize tables/views in your target data warehouse as configured.
 
 ```bash
 dbt build
