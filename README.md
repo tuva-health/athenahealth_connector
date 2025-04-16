@@ -198,11 +198,6 @@ This file controls the core behavior of your dbt project:
     tuva_last_run: Used internally by Tuva models to track run times.
 * model-paths, test-paths, etc.: Define where dbt looks for different file types.
 
-## Database & Authentication
-
-* **Database:** This project is configured specifically for Snowflake.
-* **Authentication:** Connection to Snowflake relies on JWT (JSON Web Token) authentication. Ensure your profiles.yml is correctly set up with the path to your private key and its passphrase (if applicable).
-
 ## Need Help?
 * For general questions about dbt: Check the [dbt Documentation](https://docs.getdbt.com/).
 * For general questions about the Tuva Project: Explore the [Tuva Project Docs](https://thetuvaproject.com/) or join Tuva [community Slack](https://join.slack.com/t/thetuvaproject/shared_invite/zt-16iz61187-G522Mc2WGA2mHF57e0il0Q).
